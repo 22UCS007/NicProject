@@ -1,0 +1,37 @@
+.edr-section {
+  margin: 10px 0;
+  padding: 10px;
+  border: 1px solid #ccc;
+}
+
+.edr-row {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.edr-label {
+  font-weight: bold;
+  min-width: 40px;
+}
+
+.edr-input {
+  padding: 4px 8px;
+  border: 1px solid #ccc;
+  border-radius: 3px;
+  width: 100px;
+}
+
+.submit-query-btn {
+  background-color: #4a90e2;
+  color: white;
+  border: none;
+  padding: 4px 8px;
+  border-radius: 3px;
+  cursor: pointer;
+  font-size: 12px;
+}
+
+.submit-query-btn:hover {
+  background-color: #357abd;
+}
