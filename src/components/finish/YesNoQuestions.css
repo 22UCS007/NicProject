@@ -1,0 +1,52 @@
+.yes-no-questions {
+  margin: 15px 0;
+  padding: 15px;
+  border: 1px solid #ccc;
+  background-color: #f9f9f9;
+}
+
+.registration-date {
+  margin-bottom: 15px;
+  padding: 8px;
+  background-color: #e3f2fd;
+  border-radius: 3px;
+}
+
+.question-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 10px;
+  padding: 8px;
+  background-color: white;
+  border: 1px solid #ddd;
+  border-radius: 3px;
+}
+
+.question-text {
+  flex: 1;
+  font-size: 13px;
+}
+
+.subtext {
+  font-size: 11px;
+  color: #666;
+  font-style: italic;
+}
+
+.radio-group {
+  display: flex;
+  gap: 15px;
+}
+
+.radio-option {
+  display: flex;
+  align-items: center;
+  gap: 5px;
+  font-size: 12px;
+  cursor: pointer;
+}
+
+.radio-option input[type="radio"] {
+  margin: 0;
+}
