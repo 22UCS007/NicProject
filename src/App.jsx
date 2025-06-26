@@ -1,21 +1,24 @@
-import React from 'react';
-import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
-import { useState } from 'react'
-import './App.css';
-import { NavBar } from './components/index.js';
-import Finish from "./forms/Finish.jsx";
+
+import React from "react";
+import { BrowserRouter as Router, Routes, Route, Navigate } from "react-router-dom";
+import Loginpage from "./pages/Loginpage";
+import RegisterPage from "./pages/RegisterPage";
+import Dashboard from "./pages/Dashboard";
+import { NavBar } from "./components";
 
 function App() {
-  const [count, setCount] = useState(0)
-
   return (
     <Router>
       <NavBar />
 
-      <Routes>
-        <Route path="/finish" element={<Finish />} />
-      </Routes>
-
+      <div className="min-h-screen bg-gray-100 pt-6 px-4">
+        <Routes>
+          <Route path="/" element={<Navigate to="/login" />} />
+          <Route path="/login" element={<Loginpage />} />
+          <Route path="/register" element={<RegisterPage />} />
+          <Route path="/dashboard" element={<Dashboard />} />
+        </Routes>
+      </div>
     </Router>
   );
 }
