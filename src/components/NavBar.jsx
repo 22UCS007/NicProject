@@ -6,7 +6,7 @@ const NavBar = () => {
   const [isReturnsDropdownOpen, setIsReturnsDropdownOpen] = useState(false);
   const [isApprovalSubOpen, setIsApprovalSubOpen] = useState(false);
   const [isInspectorNoteOpen, setIsInspectorNoteOpen] = useState(false);
-  const [user, setUser] = useState("approver");
+  const [user, setUser] = useState("checker");
 
   return (
     <div className="p-2 sm:p-4 bg-[#f0f2f5] min-h-screen">
