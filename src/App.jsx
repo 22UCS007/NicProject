@@ -1,15 +1,16 @@
 // import { useState } from 'react'
 // import './App.css'
-// import { NavBar } from './components/index.js'
+// import { Footer, NavBar } from './components/index.js'
 // import { PartC } from './forms/PartC.jsx'
 // import { BankInfo } from './forms/BankInfo.jsx'
 
 // function App() {
-//   const [count, setCount] = useState(0)
+//   const [count, setCount] = useState(0);
+  
 
 //   return (
 //     <>
-//       <BankInfo/>
+//       <Footer/>
 //     </>
 //   )
 // }
