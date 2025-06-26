@@ -1,15 +1,28 @@
+// import { useState } from 'react'
+// import './App.css'
+// import { NavBar } from './components/index.js'
 
-import React from "react";
+// function App() {
+//   const [count, setCount] = useState(0)
+
+//   return (
+//     <>
+//       <NavBar/>
+//     </>
+//   )
+// }
+
 import { BrowserRouter as Router, Routes, Route, Navigate } from "react-router-dom";
 import Loginpage from "./pages/Loginpage";
 import RegisterPage from "./pages/RegisterPage";
 import Dashboard from "./pages/Dashboard";
-import { NavBar } from "./components";
+import { NavBar } from "./components"; // Make sure it's correctly exported
+import React from "react";
 
 function App() {
   return (
     <Router>
-      <NavBar />
+      <NavBar /> {/* ✅ always visible */}
 
       <div className="min-h-screen bg-gray-100 pt-6 px-4">
         <Routes>
@@ -24,3 +37,4 @@ function App() {
 }
 
 export default App;
+
