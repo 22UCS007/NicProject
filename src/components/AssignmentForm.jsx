@@ -1,14 +1,20 @@
+
 // src/components/AssignmentForm.js
-import React, { useState } from "react";
+
+import { useState } from "react";
 
 const inspectorList = ["Kabita Das", "R. Roy", "A. Bhattacharya"];
 
-function AssignmentForm({ ack }) {
+function AssignmentForm({ ack, onBack }) {
   const [inspector, setInspector] = useState("");
   const [message, setMessage] = useState("");
 
   if (!ack) {
-    return <div className="text-center text-red-600">No Acknowledgement Selected</div>;
+    return (
+      <div className="text-center text-red-600">
+        No Acknowledgement Selected
+      </div>
+    );
   }
 
   const feeDetails = {
@@ -20,7 +26,13 @@ function AssignmentForm({ ack }) {
   };
 
   const handleAssign = () => {
-    setMessage(`Assigned "${inspector}" to Ack No: ${ack.ackNo}`);
+    if (!inspector) {
+      setMessage("Please select an inspector before assigning.");
+      return;
+    }
+
+    setMessage(`✅ Assigned "${inspector}" to Ack No: ${ack.ackNo}`);
+    // In real case, trigger PUT API call here
   };
 
   return (
@@ -86,16 +98,28 @@ function AssignmentForm({ ack }) {
                 <th className="border border-blue-800 px-2 py-1">Pay No</th>
                 <th className="border border-blue-800 px-2 py-1">Pay Date</th>
                 <th className="border border-blue-800 px-2 py-1">Bank Name</th>
-                <th className="border border-blue-800 px-2 py-1">Total Amount</th>
+                <th className="border border-blue-800 px-2 py-1">
+                  Total Amount
+                </th>
               </tr>
             </thead>
             <tbody>
               <tr className="text-center">
-                <td className="border border-blue-800 px-2 py-1">{feeDetails.payMode}</td>
-                <td className="border border-blue-800 px-2 py-1">{feeDetails.payNo}</td>
-                <td className="border border-blue-800 px-2 py-1">{feeDetails.payDate}</td>
-                <td className="border border-blue-800 px-2 py-1">{feeDetails.bankName}</td>
-                <td className="border border-blue-800 px-2 py-1">{feeDetails.totalAmount}</td>
+                <td className="border border-blue-800 px-2 py-1">
+                  {feeDetails.payMode}
+                </td>
+                <td className="border border-blue-800 px-2 py-1">
+                  {feeDetails.payNo}
+                </td>
+                <td className="border border-blue-800 px-2 py-1">
+                  {feeDetails.payDate}
+                </td>
+                <td className="border border-blue-800 px-2 py-1">
+                  {feeDetails.bankName}
+                </td>
+                <td className="border border-blue-800 px-2 py-1">
+                  {feeDetails.totalAmount}
+                </td>
               </tr>
             </tbody>
           </table>
@@ -105,12 +129,17 @@ function AssignmentForm({ ack }) {
       {/* Action Buttons */}
       <div className="flex gap-4 justify-center mb-4">
         <button
+          type="button"
           className="bg-blue-700 hover:bg-blue-800 text-white px-6 py-1 rounded"
           onClick={handleAssign}
         >
           Assign
         </button>
-        <button className="bg-blue-500 hover:bg-blue-600 text-white px-6 py-1 rounded">
+        <button
+          type="button"
+          className="bg-blue-500 hover:bg-blue-600 text-white px-6 py-1 rounded"
+          onClick={onBack}
+        >
           Exit
         </button>
       </div>

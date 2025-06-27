@@ -1,34 +1,34 @@
-// src/components/AckTable.js
-import React from "react";
 
-const sampleAcks = [
-  {
-    ackNo: "12633089",
-    ackDate: "13/06/2025",
-    tin: "1200",
-    applicantName: "ANJAN BHOWMIK",
-    tradeName: "NATIONAL INFORMATICS CENTRE",
-    address: "FLOOR SECRETARIAT AGARTALA 799010",
-    purpose: "Registration",
-    regFees: "50",
-    cstReg: "N",
-    assignedTo: "-",
-  },
-  {
-    ackNo: "12633090",
-    ackDate: "14/06/2025",
-    tin: "1201",
-    applicantName: "RAJESH DAS",
-    tradeName: "TRIPURA TRADERS",
-    address: "BANAMALIPUR, AGARTALA",
-    purpose: "Registration",
-    regFees: "75",
-    cstReg: "Y",
-    assignedTo: "-",
-  },
-];
+// src/components/AckTable.js
 
 function AckTable({ onSelect }) {
+  const sampleAcks = [
+    {
+      ackNo: "12633089",
+      ackDate: "13/06/2025",
+      tin: "1200",
+      applicantName: "ANJAN BHOWMIK",
+      tradeName: "NATIONAL INFORMATICS CENTRE",
+      address: "FLOOR SECRETARIAT AGARTALA 799010",
+      purpose: "Registration",
+      regFees: "50",
+      cstReg: "N",
+      assignedTo: "-",
+    },
+    {
+      ackNo: "12633090",
+      ackDate: "14/06/2025",
+      tin: "1201",
+      applicantName: "RAJESH DAS",
+      tradeName: "TRIPURA TRADERS",
+      address: "BANAMALIPUR, AGARTALA",
+      purpose: "Registration",
+      regFees: "75",
+      cstReg: "Y",
+      assignedTo: "-",
+    },
+  ];
+
   return (
     <div className="mt-6 overflow-auto">
       <table className="w-full border border-gray-400 text-sm">
@@ -52,6 +52,7 @@ function AckTable({ onSelect }) {
             <tr key={ack.ackNo} className="text-center hover:bg-gray-100">
               <td className="border px-2 py-1">
                 <button
+                  type="button"
                   className="text-blue-700 underline"
                   onClick={() => onSelect(ack)}
                 >
