@@ -18,6 +18,7 @@ import RegisterPage from "./pages/RegisterPage";
 import Dashboard from "./pages/Dashboard";
 import { NavBar } from "./components"; // Make sure it's correctly exported
 import React from "react";
+import Finish from "./forms/Finish";
 
 function App() {
   return (
@@ -30,6 +31,7 @@ function App() {
           <Route path="/login" element={<Loginpage />} />
           <Route path="/register" element={<RegisterPage />} />
           <Route path="/dashboard" element={<Dashboard />} />
+          <Route path="/finish" element={<Finish />} />
         </Routes>
       </div>
     </Router>
