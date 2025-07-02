@@ -3,9 +3,8 @@ import React from "react"
 import { useState } from "react"
 
 
-const Form = () => {
+const FormChecker = () => {
     const [inspectorComment, setInspectorComment] = useState("")
-    const [approvingComment, setApprovingComment] = useState("")
 
     const [formData, setFormData] = useState({
         dateOfVisit: '2025-02-01',
@@ -334,6 +333,7 @@ const Form = () => {
             {/* form next section starts here */}
             <div className="w-full border-2 border-gray-400">
 
+                {/* 14. Security Deposit Amount */}
                 <div className="flex flex-col md:flex-row md:items-center gap-2 border border-gray-300">
                   <label className="font-semibold mb-0">
                     14. Security Deposit Amount
@@ -403,4 +403,6 @@ const Form = () => {
     )
 }
 
-export default Form
+export default FormChecker
+
+

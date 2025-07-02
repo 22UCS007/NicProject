@@ -1,7 +1,7 @@
 import React from "react"
 import { useState } from "react"
 import LeftMenu from "../components/LeftMenu"
-import Form from "../components/finish/Form"
+import FormApprover from "../components/finish/FormApprover"
 
 const Finish = () => {
 
@@ -10,7 +10,7 @@ const Finish = () => {
       <LeftMenu activeItem="Finish" />
 
       <div className="w-full">
-        <Form/>
+        <FormApprover/>
       </div>
 
     </div>
