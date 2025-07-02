@@ -369,7 +369,7 @@ const FormApprover = () => {
 
                 </div>
                 
-                {/* Textarea section */}
+                {/* Textarea section checker */}
                 <div className="mt-8 border border-gray-300 pt-1">
                     <label className="font-semibold block pb-1">Inspector Comments (Limited to 4000 Characters)</label>
                     <textarea
@@ -384,20 +384,26 @@ const FormApprover = () => {
                         
                 {/* upload file section */}
                 <div className="mt-4">
-                    <div className="flex flex-col md:flex-row items-center gap-2">
+                    <div className="mb-4" >
                         <label className="font-semibold mb-0">Upload Inspector Report</label>
-                        <input type="file"/>
-                        <button className="bg-purple-600 text-white px-2 whitespace-nowrap w-auto">Upload</button>
-                    </div>
-
-                    <div className="text-sm font-bold text-red-600 mt-0">
-                        File Size: 179 KB
                     </div>
                     
                     <div className="mt-0">
                         <button className="bg-purple-600 text-white px-2 mr-2">view</button>
-                        <button className="bg-purple-600 text-white px-2">Delete</button>
                     </div>
+                </div>
+
+                {/* Approver section checker */}
+                <div className="border border-gray-300 pt-1">
+                    <label className="font-semibold block pb-1">Approving authority Comments (Limited to 200 Characters)</label>
+                    <textarea
+                        rows="4"
+                        name="inspectorComments"
+                        value={newFormData.approvingAuthorityComment}
+                        readOnly
+                        maxLength={200}
+                        className="w-full h-[150px] border"
+                    />
                 </div>
 
                 {/* Note section */}
@@ -414,6 +420,8 @@ const FormApprover = () => {
 
             <div className="flex justify-center mt-6 gap-4">
                 <button className="bg-purple-600 text-white px-2 mr-2">Save</button>
+                <button className="bg-purple-600 text-white px-2 mr-2">Approve</button>
+                <button className="bg-purple-600 text-white px-2 mr-2">Reject</button>
                 <button className="bg-purple-600 text-white px-2 mr-2">Exit</button>
             </div>
 
