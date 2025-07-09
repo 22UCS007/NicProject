@@ -1,69 +1,58 @@
 import React from "react"
 import { useState } from "react"
 
-const YesNoQuestions = () => {
-  const [answers, setAnswers] = useState({
-    appointments: "",
-    payments: "",
-    documents: "",
-    verification: "",
-  })
+const YesNoQuestions = ({newFormData,  handleChange}) => {
 
   const questions = [
     {
-      id: "appointments",
+      id: "allAppointmentsClosed",
       text: "All Appointments Cleared",
       subtext: "",
     },
     {
       id: "payments",
-      text: "Necessary payments (Reg. Fees, RT and Security Deposit, etc.) are",
-      subtext: "Duly received/ Exemption",
+      text: "Necessary payments (Reg. Fees, RT and Security Deposit, etc.),",
+      subtext: "if applicable have been received ?",
     },
     {
-      id: "documents",
-      text: "All Documents Uploaded",
+      id: "ptExemption",
+      text: "PT Exemption",
       subtext: "",
     },
     {
-      id: "verification",
-      text: "All Documents Verified",
+      id: "allDocumentsUploaded",
+      text: "All Documents Uploaded",
       subtext: "",
     },
   ]
 
-  const handleAnswerChange = (questionId, value) => {
-    setAnswers((prev) => ({
-      ...prev,
-      [questionId]: value,
-    }))
-  }
-
   return (
-    <div className="my-4 p-4 border border-gray-300 bg-gray-50 rounded">
-      <div className="mb-4 p-2 bg-blue-100 rounded text-sm font-semibold">
+    <div className="my-4 p-4 md:w-[50%] m-auto">
+
+      <div className="text-sm font-semibold">
         <strong>Registration Payment Date(s): 05/2025</strong>
       </div>
 
       {questions.map((question) => (
         <div
           key={question.id}
-          className="flex justify-between items-center mb-3 p-2 bg-white border border-gray-200 rounded"
+          className="flex items-center md:justify-between mb-3 p-2 border-gray-200 "
         >
-          <div className="flex-1 text-[13px]">
+          <div className="text-[13px]">
             <div>{question.text}</div>
             {question.subtext && (
               <div className="text-[11px] text-gray-500 italic">{question.subtext}</div>
             )}
           </div>
+
           <div className="flex gap-4 ml-4">
             <label className="flex items-center gap-1 text-xs cursor-pointer">
               <input
                 type="radio"
                 name={question.id}
-                value="yes"
-                checked={answers[question.id] === "yes"}
-                onChange={(e) => handleAnswerChange(question.id, e.target.value)}
+                value={true}
+                checked={newFormData[question.id] === true}
+                onChange={handleChange}
                 className="accent-blue-600"
               />
               Yes
@@ -72,14 +61,15 @@ const YesNoQuestions = () => {
               <input
                 type="radio"
                 name={question.id}
-                value="no"
-                checked={answers[question.id] === "no"}
-                onChange={(e) => handleAnswerChange(question.id, e.target.value)}
+                value={false}
+                checked={newFormData[question.id] === false}
+                onChange={handleChange}
                 className="accent-blue-600"
               />
               No
             </label>
           </div>
+
         </div>
       ))}
     </div>

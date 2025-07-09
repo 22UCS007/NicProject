@@ -1,35 +1,38 @@
+
+
 import React, { useState } from "react";
 import { ChevronDown, ChevronRight } from "lucide-react";
+import { Link } from "react-router-dom";
 
-const NavBar = () => {
+const NavBar = ({ userRole ,onSignOut}) => {
   const [isERegDropdownOpen, setIsERegDropdownOpen] = useState(false);
   const [isReturnsDropdownOpen, setIsReturnsDropdownOpen] = useState(false);
   const [isApprovalSubOpen, setIsApprovalSubOpen] = useState(false);
   const [isInspectorNoteOpen, setIsInspectorNoteOpen] = useState(false);
-  const [user, setUser] = useState("checker");
+  const [user, setUser] = useState("approver");
 
   return (
-    <div className="p-2 sm:p-4 bg-[#f0f2f5] min-h-screen">
+    
       <nav className="bg-white shadow-md rounded-lg">
-        <div className="bg-blue-500 text-white p-3 flex flex-col sm:flex-row justify-between items-center rounded-t-lg text-center sm:text-left">
+        <div className="bg-blue-500 text-white p-3 flex flex-col sm:flex-row justify-between items-center rounded-t-lg">
           <h1 className="text-lg sm:text-xl font-bold mb-2 sm:mb-0 text-yellow-300">
             VATSoft - VAT e-Filing System
           </h1>
-          <div className="flex items-center space-x-2 sm:space-x-4 text-xs sm:text-sm">
-            <span className="font-bold hover:scale-110 duration-200 hover:text-yellow-300 cursor-pointer">
+          <div className="flex items-center space-x-4 text-sm">
+            <span className="font-bold cursor-pointer hover:scale-110 duration-200 hover:text-yellow-300">
               Charge VII
             </span>
-            <a
-              href="#"
-              className="text-white hover:underline rounded-md px-1 sm:px-2 py-0.5 sm:py-1 font-bold hover:scale-110 hover:text-yellow-300"
+            <button // Changed to button for proper onClick handling
+              onClick={handleSignOut}
+              className="text-white hover:underline rounded-md px-2 py-1 font-bold hover:scale-110 hover:text-yellow-300"
             >
               Sign Out
-            </a>
+            </button>
           </div>
         </div>
 
-        <div className="bg-[#34495e] text-white p-2 flex flex-wrap justify-center items-center gap-2 md:gap-x-4 text-sm">
-          {user === "checker" && (
+        <div className="bg-[#34495e] text-white p-2 flex flex-wrap justify-center gap-2 text-sm">
+          {userRole === "checker" && (
             <div
               className="relative"
               onMouseEnter={() => setIsERegDropdownOpen(true)}
@@ -38,23 +41,21 @@ const NavBar = () => {
                 setIsInspectorNoteOpen(false);
               }}
             >
-              <button className="p-2 rounded-md hover:bg-white hover:bg-opacity-20 transition-colors duration-200 flex items-center space-x-1">
+              <button className="p-2 rounded hover:bg-white hover:bg-opacity-20 flex items-center">
                 <span>e-registration</span>
-                <ChevronDown className="pl-1" />
+                <ChevronDown className="ml-1" />
               </button>
-
               {isERegDropdownOpen && (
-                <div className="absolute left-0 top-full mt-1 bg-gray-300 text-black min-w-[200px] shadow-lg rounded-lg z-50">
+                <div className="absolute left-0 top-full mt-1 bg-gray-300 text-black shadow-lg rounded-lg z-50">
                   <div
                     className="relative group"
                     onMouseEnter={() => setIsInspectorNoteOpen(true)}
                     onMouseLeave={() => setIsInspectorNoteOpen(false)}
                   >
-                    <div className="flex justify-center items-center px-4 py-2 hover:bg-gray-100 rounded-md cursor-pointer">
+                    <div className="flex justify-center items-center px-4 py-2 hover:bg-gray-100 cursor-pointer">
                       Inspector Note
-                      <ChevronRight className="pl-2 w-7 h-7" />
+                      <ChevronRight className="ml-2" />
                     </div>
-
                     {isInspectorNoteOpen && (
                       <div className="absolute top-0 left-full ml-1 bg-gray-300 rounded-lg shadow-lg min-w-[180px] z-50">
                         {[
@@ -80,7 +81,8 @@ const NavBar = () => {
               )}
             </div>
           )}
-          {user === "approver" && (
+
+          {userRole === "approver" && (
             <>
               <div
                 className="relative"
@@ -90,23 +92,21 @@ const NavBar = () => {
                   setIsApprovalSubOpen(false);
                 }}
               >
-                <button className="p-2 rounded-md hover:bg-white hover:bg-opacity-20 transition-colors duration-200 flex items-center space-x-1">
+                <button className="p-2 rounded hover:bg-white hover:bg-opacity-20 flex items-center">
                   <span>e-registration</span>
-                  <ChevronDown className="pl-1" />
+                  <ChevronDown className="ml-1" />
                 </button>
-
                 {isERegDropdownOpen && (
-                  <div className="absolute left-0 top-full mt-1 bg-gray-300 text-black min-w-[200px] shadow-lg rounded-lg z-50">
+                  <div className="absolute left-0 top-full mt-1 bg-gray-300 text-black shadow-lg rounded-lg z-50">
                     <div
                       className="relative group"
                       onMouseEnter={() => setIsApprovalSubOpen(true)}
                       onMouseLeave={() => setIsApprovalSubOpen(false)}
                     >
-                      <div className="flex justify-center items-center px-4 py-2 hover:bg-gray-100 rounded-md cursor-pointer">
+                      <div className="flex justify-center items-center px-4 py-2 hover:bg-gray-100 cursor-pointer">
                         Approval
-                        <ChevronRight className="pl-2 w-7 h-7" />
+                        <ChevronRight className="ml-2" />
                       </div>
-
                       {isApprovalSubOpen && (
                         <div className="absolute top-0 left-full ml-1 bg-gray-300 rounded-lg shadow-lg min-w-[180px] z-50">
                           {[
@@ -151,98 +151,100 @@ const NavBar = () => {
                   </div>
                 )}
               </div>
-              <a
-                href="#"
-                className="p-2 rounded-md hover:bg-white hover:bg-opacity-20 transition-colors duration-200 flex justify-center items-center"
+
+              <Link
+                to="#"
+                className="p-2 rounded hover:bg-white hover:bg-opacity-20"
               >
                 e-WayBill
-              </a>
-              <a
-                href="#"
-                className="p-2 rounded-md hover:bg-white hover:bg-opacity-20 transition-colors duration-200"
+              </Link>
+
+              <Link
+                to="#"
+                className="p-2 rounded hover:bg-white hover:bg-opacity-20"
               >
                 e-Audit
-              </a>
-              <a
-                href="#"
-                className="p-2 rounded-md hover:bg-white hover:bg-opacity-20 transition-colors duration-200"
+              </Link>
+
+              <Link
+                to="#"
+                className="p-2 rounded hover:bg-white hover:bg-opacity-20"
               >
                 e-CST Forms
-              </a>
+              </Link>
             </>
           )}
 
-          <a
-            href="#"
-            className="p-2 rounded-md hover:bg-white hover:bg-opacity-20 transition-colors duration-200"
+          <Link
+            to="#"
+            className="p-2 rounded hover:bg-white hover:bg-opacity-20"
           >
             MIS Report
-          </a>
+          </Link>
 
-          {user === "approver" && (
-            <a
-              href="#"
-              className="p-2 rounded-md hover:bg-white hover:bg-opacity-20 transition-colors duration-200"
-            >
-              UPDATION
-            </a>
-          )}
-
-          <a
-            href="#"
-            className="p-2 rounded-md hover:bg-white hover:bg-opacity-20 transition-colors duration-200"
-          >
-            Others
-          </a>
-
-          {user === "approver" && (
+          {userRole === "approver" && (
             <>
-              <a
-                href="#"
-                className="p-2 rounded-md hover:bg-white hover:bg-opacity-20 transition-colors duration-200"
+              <Link
+                to="#"
+                className="p-2 rounded hover:bg-white hover:bg-opacity-20"
+              >
+                UPDATION
+              </Link>
+
+              <Link
+                to="#"
+                className="p-2 rounded hover:bg-white hover:bg-opacity-20"
               >
                 DLR.ADMIN
-              </a>
+              </Link>
+
               <div
                 className="relative"
                 onMouseEnter={() => setIsReturnsDropdownOpen(true)}
                 onMouseLeave={() => setIsReturnsDropdownOpen(false)}
               >
-                <button className="p-2 rounded-md hover:bg-white hover:bg-opacity-20 transition-colors duration-200 flex items-center space-x-1">
+                <button className="p-2 rounded hover:bg-white hover:bg-opacity-20 flex items-center">
                   <span>Returns</span>
-                  <ChevronDown size={16} />
+                  <ChevronDown size={16} className="ml-1" />
                 </button>
 
                 {isReturnsDropdownOpen && (
                   <div className="absolute left-0 top-full mt-1 bg-gray-300 text-black min-w-[180px] shadow-lg rounded-lg z-50">
                     {[
-                      "View/ACK e-Returns",
-                      "ACK(TDS/CST)",
-                      "Manual Payment",
-                      "Returns Entry",
-                      "Returns Verify/Submit",
-                      "Refund",
+                      { label: "View/ACK e-Returns", path: "#" },
+                      { label: "ACK(TDS/CST)", path: "#" },
+                      { label: "Manual Payment", path: "/manual-payment" },
+                      { label: "Returns Entry", path: "#" },
+                      { label: "Returns Verify/Submit", path: "#" },
+                      { label: "Refund", path: "#" },
                     ].map((item) => (
-                      <a
-                        key={item}
-                        href="#"
+                      <Link
+                        key={item.label}
+                        to={item.path}
                         className="block px-4 py-2 hover:bg-gray-100 whitespace-nowrap rounded-md"
                       >
-                        {item}
-                      </a>
+                        {item.label}
+                      </Link>
                     ))}
                   </div>
                 )}
               </div>
             </>
           )}
+
+          <Link
+            to="#"
+            className="p-2 rounded hover:bg-white hover:bg-opacity-20"
+          >
+            Others
+          </Link>
         </div>
 
-        <div className="bg-gray-200 px-4 py-2 text-gray-700 font-semibold border-t border-gray-200 text-center text-sm rounded-b-lg">
+        {/* <div className="bg-gray-200 px-4 py-2 text-gray-700 font-semibold border-t text-center text-sm rounded-b-lg">
           :: &lt;&lt;&lt; MAIN MENU &gt;&gt;&gt; ::
-        </div>
+        </div> */}
       </nav>
-    </div>
+    
   );
 };
 

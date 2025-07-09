@@ -149,10 +149,10 @@ const BusinessPartnerForm = () => {
 
     return (
         <div className="min-h-screen bg-slate-200 p-6 flex items-center justify-center">
-            <div className="w-full max-w-full bg-slate-200 shadow-lg rounded-lg p-2">
+            <div className="w-full max-w-6xl bg-slate-200 shadow-lg rounded-lg p-2">
                 <div className="w-full mx-auto border border-blue-600">
                     <div className="border-r border-t border-l bg-sky-400 border-blue-600 w-full">
-                        <div className="pl-1 text-black font-semibold">
+                        <div className="pl-1 text-black font-semibold flex justify-center">
                             [Business Partner details/Contact Person]
                         </div>
                     </div>

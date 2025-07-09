@@ -1,44 +1,62 @@
 // import { useState } from 'react'
 // import './App.css'
-// import { Footer, NavBar } from './components/index.js'
-// import { PartC } from './forms/PartC.jsx'
-// import { BankInfo } from './forms/BankInfo.jsx'
+// import { NavBar } from './components/index.js'
 
 // function App() {
-//   const [count, setCount] = useState(0);
-  
+//   const [count, setCount] = useState(0)
 
 //   return (
 //     <>
-//       <Footer/>
+//       <NavBar/>
 //     </>
 //   )
 // }
 
 import { BrowserRouter as Router, Routes, Route, Navigate } from "react-router-dom";
-import Loginpage from "./pages/Loginpage";
-import RegisterPage from "./pages/RegisterPage";
-import Dashboard from "./pages/Dashboard";
-import { NavBar } from "./components"; // Make sure it's correctly exported
-import React from "react";
+import NavBar from "./components/NavBar"; 
+import LoginPage from "./pages/Loginpage"; 
+import ManualPayment from "./pages/ManualPayment"; 
 
 function App() {
-  return (
-    <Router>
-      <NavBar /> {/* ✅ always visible */}
+  const [userRole, setUserRole] = useState("");
 
-      {/* ✅ Page content */}
-      <div className="min-h-screen bg-gray-100 pt-6 px-4">
-        <Routes>
-          <Route path="/" element={<Navigate to="/login" />} />
-          <Route path="/login" element={<Loginpage />} />
-          <Route path="/register" element={<RegisterPage />} />
-          <Route path="/dashboard" element={<Dashboard />} />
-        </Routes>
+ 
+  const handleLogin = (role) => {
+    setUserRole(role);
+    console.log(`User logged in as: ${role}`);
+  };
+
+  
+  const handleSignOut = () => {
+    setUserRole(null);
+    console.log('User signed out.');
+  };
+
+  return (
+    
+    <Router>
+     
+      <div className="flex flex-col min-h-screen">
+        {userRole && <NavBar userRole={userRole} onSignOut={handleSignOut} />}
+          <Routes>
+            <Route path="/login" element={<LoginPage onLogin={handleLogin} />} />
+            <Route
+              path="/"
+              element={userRole ? <Navigate to="/home" /> : <Navigate to="/login" />}
+            />
+            <Route
+              path="/home"
+              element={userRole ? <div className="p-4 text-center text-xl font-semibold">Welcome to the Home Page!</div> : <Navigate to="/login" />}
+            />
+            <Route
+              path="/manual-payment"
+              element={userRole === "approver" ? <ManualPayment /> : <Navigate to="/" />}
+            />
+            {!userRole && <Route path="*" element={<Navigate to="/login" replace />} />}
+          </Routes>
       </div>
     </Router>
   );
 }
 
 export default App;
-
