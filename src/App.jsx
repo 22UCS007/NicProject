@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 import { useState } from 'react'
 // import './App.css'
 // import { NavBar } from './components/index.js'
@@ -12,6 +13,10 @@ import { useState } from 'react'
 //   )
 // }
 
+=======
+
+import React, { useState } from "react";
+>>>>>>> origin/development
 import { BrowserRouter as Router, Routes, Route, Navigate } from "react-router-dom";
 import NavBar from "./components/NavBar"; 
 import LoginPage from "./pages/Loginpage"; 

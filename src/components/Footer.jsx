@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 import React, { useState } from "react";
 import { nicLogo } from "../assets/index.js";
 
@@ -28,3 +29,16 @@ const Footer = () => {
 };
 
 export default Footer;
+=======
+import React from 'react'
+
+const Footer = () => {
+  return (
+    <div>
+      
+    </div>
+  )
+}
+
+export default Footer
+>>>>>>> origin/development
