@@ -21,9 +21,6 @@ const LoginPage = ({ onLogin }) => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     setError(null);
-
-    console.log("🟢 Submitting login:", credentials);
-
     try {
       const response = await fetch(
         "https://vat-portal-backend-nic.onrender.com/login",
