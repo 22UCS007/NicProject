@@ -32,12 +32,13 @@ const LoginPage = ({ onLogin }) => {
           body: JSON.stringify(credentials),
         }
       );
-
+      console.log(response);
+      
       const data = await response.json();
       console.log("✅ Server response JSON:", data);
 
       if (response.ok && data?.role) { // Check for response.ok as well
-        onLogin(data.role); // Call the onLogin prop with the role
+        onLogin(data); // Call the onLogin prop with the role
         navigate('/'); // Redirect to the home page after successful login
       } else {
         setError(data.message || "Invalid credentials or no role returned.");
