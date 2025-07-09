@@ -17,6 +17,7 @@ import NavBar from "./components/NavBar";
 import LoginPage from "./pages/Loginpage"; 
 import ManualPayment from "./pages/ManualPayment"; 
 import Footer from "./components/Footer";
+import { useState } from "react";
 
 function App() {
   const [userRole, setUserRole] = useState("");
