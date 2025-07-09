@@ -2,23 +2,20 @@
 
 import React, { useState } from "react";
 import { ChevronDown, ChevronRight } from "lucide-react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 
 const NavBar = ({ userRole ,onSignOut}) => {
   const [isERegDropdownOpen, setIsERegDropdownOpen] = useState(false);
   const [isReturnsDropdownOpen, setIsReturnsDropdownOpen] = useState(false);
   const [isApprovalSubOpen, setIsApprovalSubOpen] = useState(false);
   const [isInspectorNoteOpen, setIsInspectorNoteOpen] = useState(false);
-<<<<<<< HEAD
-  const [user, setUser] = useState("approver");
-=======
+  const navigate = useNavigate();
  
 
   const handleSignOut = () => {
     onSignOut(); // Call the signOut function passed from App.jsx
     navigate('/login'); // Explicitly redirect to login page
   };
->>>>>>> origin/development
 
   return (
     
@@ -32,11 +29,7 @@ const NavBar = ({ userRole ,onSignOut}) => {
               Charge VII
             </span>
             <button // Changed to button for proper onClick handling
-<<<<<<< HEAD
-              onClick={onSignOut}
-=======
               onClick={handleSignOut}
->>>>>>> origin/development
               className="text-white hover:underline rounded-md px-2 py-1 font-bold hover:scale-110 hover:text-yellow-300"
             >
               Sign Out
