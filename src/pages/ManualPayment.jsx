@@ -777,7 +777,7 @@ function ManualPayment() {
       timestamp: new Date().toISOString()
     };
 
-    setUnsavedPayments(prev => [...prev, newPaymentData]);
+    setUnsavedPayments(prev => [...prev, newPaymentData]);// it appends the new payment to the unsavedPayments array
     setMessage('Payment added to temporary list. Click "Save" to send to backend.');
     console.log('Added new temporary payment:', newPaymentData);
 
