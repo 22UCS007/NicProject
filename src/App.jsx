@@ -18,6 +18,7 @@ import LoginPage from "./pages/Loginpage";
 import ManualPayment from "./pages/ManualPayment"; 
 import Footer from "./components/Footer";
 import { useState } from "react";
+import Review from "./pages/Review";
 
 function App() {
   const [userRole, setUserRole] = useState("");
@@ -26,6 +27,7 @@ function App() {
   const handleLogin = (data) => {
     setUserRole(data.role);
     setUserData(data);
+    console.log(data);
     console.log(`User logged in as: ${data.role}`);
   };
 
@@ -63,8 +65,8 @@ function App() {
             />
 
             <Route
-              path="/checkernote"
-              element={userRole==="checker" ? <CheckerReview userRole={userRole}/> : <Navigate to="/" />}
+              path="/reviewpage"
+              element={userRole ? <Review userRole={userRole} userData={userData}/> : <Navigate to="/" />}
             ></Route>
 
             {!userRole && <Route path="*" element={<Navigate to="/login" replace />} />}

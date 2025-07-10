@@ -68,7 +68,7 @@ const NavBar = ({ userRole, onSignOut }) => {
                   {isInspectorNoteOpen && (
                     <div className="absolute top-0 left-full ml-1 bg-gray-300 rounded-lg shadow-lg min-w-[180px] z-50">
                       {[
-                        {label: "New Registration", path: "/checkernote"},
+                        {label: "New Registration", path: "/reviewpage"},
                         {label: "Transfer TIN", path: "#"},
                         {label: "Deregistration", path: "#"},
                         {label: "CST Registration", path: "#"},
@@ -122,20 +122,20 @@ const NavBar = ({ userRole, onSignOut }) => {
                     {isApprovalSubOpen && (
                       <div className="absolute top-0 left-full ml-1 bg-gray-300 rounded-lg shadow-lg min-w-[180px] z-50">
                         {[
-                          "New Reg./Amedment",
-                          "Transfer TIN",
-                          "Deregistration",
-                          "CST Registration",
-                          "Transporter Registration",
-                          "Registration Amedment",
-                        ].map((sub) => (
-                          <a
-                            key={sub}
-                            href="#"
+                          {label: "New Reg./Amedment", path: "/reviewpage"},
+                          {label: "Transfer TIN", path: "#"},
+                          {label: "Deregistration", path: "#"},
+                          {label: "CST Registration", path: "#"},
+                          {label: "Transporter Registration", path: "#"},
+                          {label: "Registration Amedment", path: "#"},
+                        ].map((sub, index) => (
+                          <Link
+                            key={index}
+                            to={sub.path}
                             className="block px-4 py-2 hover:bg-gray-100 whitespace-nowrap rounded-md"
                           >
-                            {sub}
-                          </a>
+                            {sub.label}
+                          </Link>
                         ))}
                       </div>
                     )}
