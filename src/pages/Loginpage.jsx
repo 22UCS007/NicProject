@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import { useNavigate } from 'react-router-dom'; // Import useNavigate for redirection
+import Cookies from 'js-cookie';
 
 // Changed prop name from 'setRole' to 'onLogin' to match App.jsx
 const LoginPage = ({ onLogin }) => {
@@ -36,6 +37,9 @@ const LoginPage = ({ onLogin }) => {
       
       const data = await response.json();
       console.log("✅ Server response JSON:", data);
+      
+      Cookies.set('authToken', data.token, { expires: 7, secure: true, sameSite: 'Lax' });
+      console.log("Token stored in cookie:", data.token);
 
       if (response.ok && data?.role) { // Check for response.ok as well
         onLogin(data); // Call the onLogin prop with the role

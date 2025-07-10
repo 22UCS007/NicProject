@@ -1,5 +1,3 @@
-
-
 import React, { useState } from "react";
 import { ChevronDown, ChevronRight } from "lucide-react";
 import { Link, useNavigate } from "react-router-dom";
@@ -10,18 +8,15 @@ const NavBar = ({ userRole, onSignOut }) => {
   const [isReturnsDropdownOpen, setIsReturnsDropdownOpen] = useState(false);
   const [isInspectorNoteOpen, setIsInspectorNoteOpen] = useState(false);
   const navigate = useNavigate();
- 
 
   const handleSignOut = () => {
-    onSignOut(); // Call the signOut function passed from App.jsx
-    navigate('/login'); // Explicitly redirect to login page
+    onSignOut();
+    navigate('/login');
   };
 
   return (
-
     <nav className="bg-white shadow-md rounded-lg">
-
-      {/* Header Section common for checker and approver*/}
+      {/* Header Section */}
       <div className="bg-blue-500 text-white p-3 flex flex-col sm:flex-row justify-between items-center rounded-t-lg">
         <h1 className="text-lg sm:text-xl font-bold mb-2 sm:mb-0 text-yellow-300">
           VATSoft - VAT e-Filing System
@@ -30,7 +25,7 @@ const NavBar = ({ userRole, onSignOut }) => {
           <span className="font-bold cursor-pointer hover:scale-110 duration-200 hover:text-yellow-300">
             Charge VII
           </span>
-          <button // Changed to button for proper onClick handling
+          <button
             onClick={handleSignOut}
             className="text-white hover:underline rounded-md px-2 py-1 font-bold hover:scale-110 hover:text-yellow-300"
           >
@@ -39,8 +34,10 @@ const NavBar = ({ userRole, onSignOut }) => {
         </div>
       </div>
 
-      {/* Navigation Links different for checker and approver*/}
+      {/* Navigation Links */}
       <div className="bg-[#34495e] text-white p-2 flex flex-wrap justify-center gap-2 text-sm">
+
+        {/* Checker Menu */}
         {userRole === "checker" && (
           <div
             className="relative"
@@ -68,12 +65,12 @@ const NavBar = ({ userRole, onSignOut }) => {
                   {isInspectorNoteOpen && (
                     <div className="absolute top-0 left-full ml-1 bg-gray-300 rounded-lg shadow-lg min-w-[180px] z-50">
                       {[
-                        {label: "New Registration", path: "/reviewpage"},
-                        {label: "Transfer TIN", path: "#"},
-                        {label: "Deregistration", path: "#"},
-                        {label: "CST Registration", path: "#"},
-                        {label: "Transporter Registration", path: "#"},
-                        {label: "Registration Amedment", path: "#"},
+                        { label: "New Registration", path: "/reviewpage" },
+                        { label: "Transfer TIN", path: "#" },
+                        { label: "Deregistration", path: "#" },
+                        { label: "CST Registration", path: "#" },
+                        { label: "Transporter Registration", path: "#" },
+                        { label: "Registration Amendment", path: "#" },
                       ].map((sub, index) => (
                         <Link
                           key={index}
@@ -91,6 +88,7 @@ const NavBar = ({ userRole, onSignOut }) => {
           </div>
         )}
 
+        {/* Approver Menu */}
         {userRole === "approver" && (
           <>
             <div
@@ -101,7 +99,6 @@ const NavBar = ({ userRole, onSignOut }) => {
                 setIsApprovalSubOpen(false);
               }}
             >
-
               <button className="p-2 rounded hover:bg-white hover:bg-opacity-20 flex items-center">
                 <span>e-registration</span>
                 <ChevronDown className="ml-1" />
@@ -109,7 +106,7 @@ const NavBar = ({ userRole, onSignOut }) => {
 
               {isERegDropdownOpen && (
                 <div className="absolute left-0 top-full mt-1 bg-gray-300 text-black shadow-lg rounded-lg z-50">
-
+                  {/* Approval submenu */}
                   <div
                     className="relative group"
                     onMouseEnter={() => setIsApprovalSubOpen(true)}
@@ -122,12 +119,12 @@ const NavBar = ({ userRole, onSignOut }) => {
                     {isApprovalSubOpen && (
                       <div className="absolute top-0 left-full ml-1 bg-gray-300 rounded-lg shadow-lg min-w-[180px] z-50">
                         {[
-                          {label: "New Reg./Amedment", path: "/reviewpage"},
-                          {label: "Transfer TIN", path: "#"},
-                          {label: "Deregistration", path: "#"},
-                          {label: "CST Registration", path: "#"},
-                          {label: "Transporter Registration", path: "#"},
-                          {label: "Registration Amedment", path: "#"},
+                          { label: "New Reg./Amendment", path: "/reviewpage" },
+                          { label: "Transfer TIN", path: "#" },
+                          { label: "Deregistration", path: "#" },
+                          { label: "CST Registration", path: "#" },
+                          { label: "Transporter Registration", path: "#" },
+                          { label: "Registration Amendment", path: "#" },
                         ].map((sub, index) => (
                           <Link
                             key={index}
@@ -141,24 +138,25 @@ const NavBar = ({ userRole, onSignOut }) => {
                     )}
                   </div>
 
+                  {/* Your list of direct links */}
                   {[
-                    "Reports",
-                    "Appointments",
-                    "Assignments",
-                    "Closing of appointments",
-                    "Transfer In",
-                    "Duplicate Certificates",
-                    "Dealer (Backlog)",
-                    "CST (Backlog)",
-                    "Entry, Modify",
+                    { label: "Reports", path: "#" },
+                    { label: "Appointments", path: "#" },
+                    { label: "Assignments", path: "/assignments" },
+                    { label: "Transfer In", path: "#" },
+                    { label: "Closing of appointments", path: "#" },
+                    { label: "Duplicate Certificates", path: "#" },
+                    { label: "Dealer (Backlog)", path: "#" },
+                    { label: "CST (Backlog)", path: "#" },
+                    { label: "Entry, Modify", path: "#" },
                   ].map((item) => (
-                    <a
-                      key={item}
-                      href="#"
+                    <Link
+                      key={item.label}
+                      to={item.path}
                       className="block px-4 py-2 hover:bg-gray-100 whitespace-nowrap rounded-md"
                     >
-                      {item}
-                    </a>
+                      {item.label}
+                    </Link>
                   ))}
                 </div>
               )}
@@ -187,6 +185,7 @@ const NavBar = ({ userRole, onSignOut }) => {
           </>
         )}
 
+        {/* Common links */}
         <Link
           to="#"
           className="p-2 rounded hover:bg-white hover:bg-opacity-20"
@@ -202,7 +201,6 @@ const NavBar = ({ userRole, onSignOut }) => {
             >
               UPDATION
             </Link>
-
             <Link
               to="#"
               className="p-2 rounded hover:bg-white hover:bg-opacity-20"
@@ -219,7 +217,6 @@ const NavBar = ({ userRole, onSignOut }) => {
                 <span>Returns</span>
                 <ChevronDown size={16} className="ml-1" />
               </button>
-
               {isReturnsDropdownOpen && (
                 <div className="absolute left-0 top-full mt-1 bg-gray-300 text-black min-w-[180px] shadow-lg rounded-lg z-50">
                   {[
@@ -251,12 +248,7 @@ const NavBar = ({ userRole, onSignOut }) => {
           Others
         </Link>
       </div>
-
-      {/* <div className="bg-gray-200 px-4 py-2 text-gray-700 font-semibold border-t text-center text-sm rounded-b-lg">
-          :: &lt;&lt;&lt; MAIN MENU &gt;&gt;&gt; ::
-        </div> */}
     </nav>
-
   );
 };
 
