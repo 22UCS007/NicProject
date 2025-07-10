@@ -1,18 +1,32 @@
+// import { useState } from 'react'
+// import './App.css'
+// import { NavBar } from './components/index.js'
 
-import React, { useState } from "react";
+// function App() {
+//   const [count, setCount] = useState(0)
+
+//   return (
+//     <>
+//       <NavBar/>
+//     </>
+//   )
+// }
+
 import { BrowserRouter as Router, Routes, Route, Navigate } from "react-router-dom";
 import NavBar from "./components/NavBar"; 
 import LoginPage from "./pages/Loginpage"; 
 import ManualPayment from "./pages/ManualPayment"; 
-import CheckerReview from "./pages/CheckerReview";
+import Footer from "./components/Footer";
+import { useState } from "react";
 
 function App() {
   const [userRole, setUserRole] = useState("");
-
+  const [userData,setUserData] = useState(null);
  
-  const handleLogin = (role) => {
-    setUserRole(role);
-    console.log(`User logged in as: ${role}`);
+  const handleLogin = (data) => {
+    setUserRole(data.role);
+    setUserData(data);
+    console.log(`User logged in as: ${data.role}`);
   };
 
   
@@ -56,6 +70,7 @@ function App() {
             {!userRole && <Route path="*" element={<Navigate to="/login" replace />} />}
 
           </Routes>
+        {userRole && <Footer userData={userData}/>}  
       </div>
     </Router>
   );

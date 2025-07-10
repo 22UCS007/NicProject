@@ -2,14 +2,15 @@
 
 import React, { useState } from "react";
 import { ChevronDown, ChevronRight } from "lucide-react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 
 const NavBar = ({ userRole, onSignOut }) => {
   const [isERegDropdownOpen, setIsERegDropdownOpen] = useState(false);
   const [isApprovalSubOpen, setIsApprovalSubOpen] = useState(false);
   const [isReturnsDropdownOpen, setIsReturnsDropdownOpen] = useState(false);
   const [isInspectorNoteOpen, setIsInspectorNoteOpen] = useState(false);
-
+  const navigate = useNavigate();
+ 
 
   const handleSignOut = () => {
     onSignOut(); // Call the signOut function passed from App.jsx
