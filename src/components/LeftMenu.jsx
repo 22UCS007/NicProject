@@ -1,20 +1,30 @@
 import React, { useState } from "react";
+import {useLocation, useNavigate, useParams} from "react-router-dom";
 
-const LeftMenu = ({ activeItem: initialActiveItem = "Finish" }) => {
-  const [activeItem, setActiveItem] = useState(initialActiveItem);
+const LeftMenu = () => {
+
+  const location = useLocation();
+  const navigate = useNavigate();
+  const { tinNumber } = useParams();
 
   const menuItems = [
-    { id: "part-a", label: "Part (A)" },
-    { id: "part-b", label: "Part (B)" },
+    { id: "partA", label: "Part (A)" },
+    { id: "partB", label: "Part (B)" },
     { id: "cst", label: "CST" },
-    { id: "part-c", label: "Part (C)" },
-    { id: "bank-info", label: "Bank Info" },
+    { id: "partC", label: "Part (C)" },
+    { id: "bankinfo", label: "Bank Info" },
     { id: "additional", label: "Additional" },
-    { id: "business-places", label: "Business Places" },
-    { id: "business-partner", label: "Business Partner details" },
+    { id: "businessplaces", label: "Business Places" },
+    { id: "businesspartner", label: "Business Partner details" },
     { id: "documents", label: "Documents" },
     { id: "finish", label: "Finish" },
   ];
+
+  const currentPath = location.pathname;
+
+  const handleClick = (id)=>{
+    navigate(`/form/${id}/${tinNumber}`)
+  }
 
   return (
     <div>
@@ -25,17 +35,20 @@ const LeftMenu = ({ activeItem: initialActiveItem = "Finish" }) => {
 
       <div className="w-[180px] bg-blue-500 p-1 h-screen box-border text-md font-normal text-left">
         <div className="flex flex-col">
-          {menuItems.map((item) => (
-            <div
-              key={item.id}
-              onClick={() => setActiveItem(item.label)}
-              className={`text-left font-bold text-[#1a237e] underline cursor-pointer hover:text-blue-800 ${
-                activeItem === item.label ? "bg-white" : ""
-              }`}
-            >
-              {item.label}
-            </div>
-          ))}
+          {menuItems.map((item) => {
+            const isActive = currentPath.includes(`/form/${item.id}`);
+            return (
+              <div
+                key={item.id}
+                onClick={() => handleClick(item.id)}
+                className={`text-left font-bold text-[#1a237e] underline cursor-pointer hover:text-blue-800 ${
+                  isActive ? "bg-white" : ""
+                }`}
+              >
+                {item.label}
+              </div>
+            );
+          })}
         </div>
       </div>
     </div>
