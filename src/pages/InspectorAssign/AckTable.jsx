@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { Cookies } from 'js-cookie';
+import  Cookies  from 'js-cookie';
 
 const AckTable = ({ onSelect }) => {
   const [ackData, setAckData] = useState(null);
