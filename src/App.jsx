@@ -40,6 +40,7 @@ function App() {
               path="/manual-payment"
               element={userRole === "approver" ? <ManualPayment /> : <Navigate to="/" />}
             />
+            
             {!userRole && <Route path="*" element={<Navigate to="/login" replace />} />}
           </Routes>
       </div>
@@ -48,3 +49,14 @@ function App() {
 }
 
 export default App;
+
+
+
+// import React, { useState } from "react";
+// import Assignment from "./components/Assignment";
+// function App(){
+//   return(
+//       <Assignment/>
+//   );
+// }
+// export default App;
