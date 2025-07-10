@@ -49,37 +49,25 @@ const PartAForm = ({ onNext }) => {
   return (
     // Overall page background - Secondary Blue (rgb(213, 225, 240))
     <div className="min-h-screen bg-[#D5E1F0] p-4 font-sans flex items-center justify-center">
-      <div className="bg-white p-6 rounded-lg shadow-lg w-full max-w-4xl">
+      <div className="bg-white p-6 cornered-lg shadow-lg w-full max-w-4xl">
         {/* Page Title */}
         <h2 className="text-2xl font-bold text-center text-red-600 mb-6">Part A</h2>
         
-        {/* Header Strip - Primary Blue (rgb(41, 77, 116)) */}
-        <div className="bg-[#294D74] text-white p-3 rounded-t-lg mb-4 text-center">
+        {/* Header Strip - Primary Blue (rgb(69, 145, 225)) */}
+        <div className="bg-[#5CA5F3] text-white p-3 cornered-t-lg mb-4 text-center">
           <h3 className="text-lg font-semibold">.:e-Registration-Inspector Note :.</h3>
         </div>
 
         <div className="grid grid-cols-1 md:grid-cols-4 gap-4 mb-6 text-sm">
-          {/* Left Navigation Panel - Primary Blue (rgb(41, 77, 116)) */}
-          <div className="col-span-1 md:col-span-1 bg-[#294D74] text-white p-4 rounded-lg flex flex-col space-y-2 text-xs">
-            <h4 className="font-bold mb-2">Ack.No.: 12633089</h4>
-            {/* Active Navigation Link - Secondary Blue background, Text Black */}
-            <a href="#" className="bg-[#D5E1F0] text-black font-bold py-1 px-2 rounded block">Part (A)</a>
-            <a href="#" className="hover:underline py-1 px-2 block">Part (B)</a>
-            <a href="#" className="hover:underline py-1 px-2 block">CST</a>
-            <a href="#" className="hover:underline py-1 px-2 block">Part (C)</a>
-            <a href="#" className="hover:underline py-1 px-2 block">Bank Info</a>
-            <a href="#" className="hover:underline py-1 px-2 block">Additional Business Places</a>
-            <a href="#" className="hover:underline py-1 px-2 block">Business Partner details</a>
-            <a href="#" className="hover:underline py-1 px-2 block">Documents</a>
-            <a href="#" className="hover:underline py-1 px-2 block">Finish</a>
-          </div>
+          {/* Left Navigation Panel - Primary Blue (rgb(90, 155, 224)) */}
+          
 
           {/* Main Form Content */}
           <form onSubmit={handleSubmit} className="col-span-1 md:col-span-3 space-y-4">
             {/* Form Section: PART(A) - Secondary Blue content area (rgb(213, 225, 240)) */}
-            <div className="bg-[#D5E1F0] p-4 rounded-lg border border-[#C0D0E0]"> {/* Border Gray/Light Blue */}
-              {/* Section Header Text - Primary Blue text (rgb(41, 77, 116)) */}
-              <h4 className="font-semibold text-[#294D74] mb-3 text-sm">PART(A)</h4>
+            <div className="bg-[#D5E1F0] p-4 cornered-lg border border-[#C0D0E0]"> {/* Border Gray/Light Blue */}
+              {/* Section Header Text - Primary Blue text (rgb(76, 141, 212)) */}
+              <h4 className="font-semibold text-[#5CA5F3] mb-3 text-sm">PART(A)</h4>
               {/* Type of Registration */}
               <div className="grid grid-cols-1 md:grid-cols-2 gap-3 mb-3 items-center">
                 {/* Field Label */}
@@ -90,7 +78,7 @@ const PartAForm = ({ onNext }) => {
                   name="typeOfRegistration"
                   value={formData.typeOfRegistration}
                   onChange={handleChange}
-                  className="p-1 border border-[#C0D0E0] rounded-sm focus:outline-none focus:ring-1 focus:ring-blue-500 w-full h-7 text-xs bg-white"
+                  className="p-1 border border-[#C0D0E0] cornered-sm focus:outline-none focus:ring-1 focus:ring-blue-500 w-full h-7 text-xs bg-white"
                 >
                   <option value="VOLUNTARY">VOLUNTARY</option>
                   <option value="MANDATORY">MANDATORY</option>
@@ -106,7 +94,7 @@ const PartAForm = ({ onNext }) => {
                     name="selectLvoOffice"
                     value={formData.selectLvoOffice}
                     onChange={handleChange}
-                    className="p-1 border border-[#C0D0E0] rounded-sm focus:outline-none focus:ring-1 focus:ring-blue-500 w-full md:w-auto flex-grow h-7 text-xs bg-white"
+                    className="p-1 border border-[#C0D0E0] cornered-sm focus:outline-none focus:ring-1 focus:ring-blue-500 w-full md:w-auto flex-grow h-7 text-xs bg-white"
                   >
                     <option value="Supdt.of Taxes,Charge-VII">Supdt.of Taxes,Charge-VII</option>
                     <option value="Option 2">Option 2</option>
@@ -126,7 +114,7 @@ const PartAForm = ({ onNext }) => {
                   name="businessStatus"
                   value={formData.businessStatus}
                   onChange={handleChange}
-                  className="p-1 border border-[#C0D0E0] rounded-sm focus:outline-none focus:ring-1 focus:ring-blue-500 w-full h-7 text-xs bg-white"
+                  className="p-1 border border-[#C0D0E0] cornered-sm focus:outline-none focus:ring-1 focus:ring-blue-500 w-full h-7 text-xs bg-white"
                 >
                   <option value="Proprietary">Proprietary</option>
                   <option value="Partnership">Partnership</option>
@@ -143,48 +131,48 @@ const PartAForm = ({ onNext }) => {
                   name="constitutionOfBusiness"
                   value={formData.constitutionOfBusiness}
                   onChange={handleChange}
-                  className="p-1 border border-[#C0D0E0] rounded-sm focus:outline-none focus:ring-1 focus:ring-blue-500 w-full h-7 text-xs bg-white"
+                  className="p-1 border border-[#C0D0E0] cornered-sm focus:outline-none focus:ring-1 focus:ring-blue-500 w-full h-7 text-xs bg-white"
                   required
                 />
               </div>
             </div>
 
             {/* Section 1: Name and Details - Secondary Blue content area */}
-            <div className="bg-[#D5E1F0] p-4 rounded-lg border border-[#C0D0E0]">
-              <h4 className="font-semibold text-[#294D74] mb-3 text-sm">1. Name of the Applicant Dealer<span className="text-red-600 font-bold">*</span></h4>
+            <div className="bg-[#D5E1F0] p-4 cornered-lg border border-[#C0D0E0]">
+              <h4 className="font-semibold text-[#5CA5F3] mb-3 text-sm">1. Name of the Applicant Dealer<span className="text-red-600 font-bold">*</span></h4>
               <input
                 type="text"
                 name="nameOfApplicantDealer"
                 value={formData.nameOfApplicantDealer}
                 onChange={handleChange}
-                className="p-1 border border-[#C0D0E0] rounded-sm w-full h-7 text-xs bg-white focus:outline-none focus:ring-1 focus:ring-blue-500"
+                className="p-1 border border-[#C0D0E0] cornered-sm w-full h-7 text-xs bg-white focus:outline-none focus:ring-1 focus:ring-blue-500"
                 required
               />
             </div>
 
             {/* Section 2: Father's/Mother's/Husband's Name - Secondary Blue content area */}
-            <div className="bg-[#D5E1F0] p-4 rounded-lg border border-[#C0D0E0]">
-              <h4 className="font-semibold text-[#294D74] mb-3 text-sm">2. Father's/ Mother's/ Husband's Name</h4>
+            <div className="bg-[#D5E1F0] p-4 cornered-lg border border-[#C0D0E0]">
+              <h4 className="font-semibold text-[#5CA5F3] mb-3 text-sm">2. Father's/ Mother's/ Husband's Name</h4>
               <input
                 type="text"
                 name="fathersMothersHusbandsName"
                 value={formData.fathersMothersHusbandsName}
                 onChange={handleChange}
-                className="p-1 border border-[#C0D0E0] rounded-sm w-full h-7 text-xs bg-white focus:outline-none focus:ring-1 focus:ring-blue-500"
+                className="p-1 border border-[#C0D0E0] cornered-sm w-full h-7 text-xs bg-white focus:outline-none focus:ring-1 focus:ring-blue-500"
                 required
               />
             </div>
 
             {/* Section 3: Date of Birth and Sex - Secondary Blue content area */}
-            <div className="bg-[#D5E1F0] p-4 rounded-lg border border-[#C0D0E0]">
-              <h4 className="font-semibold text-[#294D74] mb-3 text-sm">3. Date of Birth (DD/MM/YYYY)</h4>
+            <div className="bg-[#D5E1F0] p-4 cornered-lg border border-[#C0D0E0]">
+              <h4 className="font-semibold text-[#5CA5F3] mb-3 text-sm">3. Date of Birth (DD/MM/YYYY)</h4>
               <div className="grid grid-cols-1 md:grid-cols-3 gap-3 items-center">
                 <input
                   type="date"
                   name="dateOfBirth"
                   value={formData.dateOfBirth}
                   onChange={handleChange}
-                  className="p-1 border border-[#C0D0E0] rounded-sm focus:outline-none focus:ring-1 focus:ring-blue-500 col-span-2 w-full h-7 text-xs bg-white"
+                  className="p-1 border border-[#C0D0E0] cornered-sm focus:outline-none focus:ring-1 focus:ring-blue-500 col-span-2 w-full h-7 text-xs bg-white"
                   required
                 />
                 {/* Submit Query Button - Button Blue (rgb(66, 139, 202)) */}
@@ -220,21 +208,21 @@ const PartAForm = ({ onNext }) => {
             </div>
 
             {/* Section 4: Trading Name - Secondary Blue content area */}
-            <div className="bg-[#D5E1F0] p-4 rounded-lg border border-[#C0D0E0]">
-              <h4 className="font-semibold text-[#294D74] mb-3 text-sm">4. Trading Name<span className="text-red-600 font-bold">*</span></h4>
+            <div className="bg-[#D5E1F0] p-4 cornered-lg border border-[#C0D0E0]">
+              <h4 className="font-semibold text-[#5CA5F3] mb-3 text-sm">4. Trading Name<span className="text-red-600 font-bold">*</span></h4>
               <input
                 type="text"
                 name="tradingName"
                 value={formData.tradingName}
                 onChange={handleChange}
-                className="p-1 border border-[#C0D0E0] rounded-sm w-full h-7 text-xs bg-white focus:outline-none focus:ring-1 focus:ring-blue-500"
+                className="p-1 border border-[#C0D0E0] cornered-sm w-full h-7 text-xs bg-white focus:outline-none focus:ring-1 focus:ring-blue-500"
                 required
               />
             </div>
 
             {/* Section 6: PAN - Secondary Blue content area */}
-            <div className="bg-[#D5E1F0] p-4 rounded-lg border border-[#C0D0E0]">
-              <h4 className="font-semibold text-[#294D74] mb-3 text-sm">6. PAN</h4>
+            <div className="bg-[#D5E1F0] p-4 cornered-lg border border-[#C0D0E0]">
+              <h4 className="font-semibold text-[#5CA5F3] mb-3 text-sm">6. PAN</h4>
               <input
                 type="text"
                 name="pan"
@@ -246,8 +234,8 @@ const PartAForm = ({ onNext }) => {
             </div>
 
             {/* Section 7: Business Address - Secondary Blue content area */}
-            <div className="bg-[#D5E1F0] p-4 rounded-lg border border-[#C0D0E0]">
-              <h4 className="font-semibold text-[#294D74] mb-3 text-sm">7. Business Address (Principle place of business)</h4>
+            <div className="bg-[#D5E1F0] p-4 cornered-lg border border-[#C0D0E0]">
+              <h4 className="font-semibold text-[#5CA5F3] mb-3 text-sm">7. Business Address (Principle place of business)</h4>
               <div className="grid grid-cols-1 md:grid-cols-2 gap-3 mb-3 items-center">
                 <label htmlFor="roomFlatPremisesNo" className="text-gray-700 text-xs text-right pr-2">Room/Flat/Premises No.<span className="text-red-600 font-bold">*</span></label>
                 <input
@@ -326,8 +314,8 @@ const PartAForm = ({ onNext }) => {
             </div>
 
             {/* Section 8: Contact Details - Secondary Blue content area */}
-            <div className="bg-[#D5E1F0] p-4 rounded-lg border border-[#C0D0E0]">
-              <h4 className="font-semibold text-[#294D74] mb-3 text-sm">8. Contact Details</h4>
+            <div className="bg-[#D5E1F0] p-4 cornered-lg border border-[#C0D0E0]">
+              <h4 className="font-semibold text-[#5CA5F3] mb-3 text-sm">8. Contact Details</h4>
               <div className="grid grid-cols-1 md:grid-cols-2 gap-3 mb-3 items-center">
                 <label htmlFor="telephone" className="text-gray-700 text-xs text-right pr-2">Telephone</label>
                 <input

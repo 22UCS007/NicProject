@@ -1,343 +1,481 @@
-// File: src/forms/PartBForm.jsx
-import React, { useState } from 'react';
+import React, { useState } from "react";
+
+const initialAddress = {
+  numberAndStreet: "",
+  villageTownCity: "",
+  district: "West Tripura",
+  state: "TRIPURA",
+  pinCode: "",
+  country: "INDIA",
+};
 
 const PartBForm = ({ onNext, onPrevious }) => {
-  const [formData, setFormData] = useState({
-    dealerAddress: '',
-    warehouseAddress: '',
-    principlePlaceOfBusiness: 'Same as dealer address', // Default value
-    businessType: 'Retailer', // Default value
-    typeOfCommodity: [], // For the list of commodities
-    commodityDescription: '',
-    dateOfCommencementOfBusiness: '2025-01-01', // Example date
-    dateOfCommencementOfLiability: '2025-01-01', // Example date
-    previousRegistrationNumber: '',
-    previousAct: '',
-    frequencyOfFiling: 'Monthly', // Default value
-    tinNumber: '', // From the screenshot, it looks like there's a TIN input area
+  const [residentialAddress, setResidentialAddress] = useState(initialAddress);
+  const [permanentAddress, setPermanentAddress] = useState(initialAddress);
+  const [statAuthority, setStatAuthority] = useState("REGISTER OF COMPANIES");
+  const [statAuthorityOther, setStatAuthorityOther] = useState("");
+  const [economicActivity, setEconomicActivity] = useState({
+    Manufacturer: true,
+    Trader: false,
+    Seller: false,
+    Reseller: false,
+    Importer: false,
+    Exporter: false,
   });
-
-  // State for adding new commodity
-  const [newCommodity, setNewCommodity] = useState({
-    code: '',
-    commodity: '',
-    description: ''
+  const [commodity, setCommodity] = useState({
+    code: "",
+    commodity: "Battery water, De-mineralised water",
+    description: "",
   });
+  const [commodityList, setCommodityList] = useState([
+    {
+      act: "VAT",
+      code: "218601",
+      commodity: "Battery water, De-mineralised water",
+      description: "DESCRIPTION OF COMMODITY",
+    },
+  ]);
+  const [firstTaxableSale, setFirstTaxableSale] = useState("2025-02-01");
+  const [vatType, setVatType] = useState("Normal VAT");
+  const [cotType, setCotType] = useState("");
+  const [turnover, setTurnover] = useState("");
+  const [filingFreq, setFilingFreq] = useState("");
 
-  const handleChange = (e) => {
-    const { name, value, type, checked } = e.target;
-    setFormData((prevData) => ({
-      ...prevData,
-      [name]: type === 'checkbox' ? checked : value,
-    }));
-  };
-
-  const handleCommodityChange = (e) => {
-    const { name, value } = e.target;
-    setNewCommodity((prev) => ({
-      ...prev,
-      [name]: value
-    }));
-  };
-
-  const handleAddCommodity = () => {
-    if (newCommodity.code && newCommodity.commodity) {
-      setFormData((prevData) => ({
-        ...prevData,
-        typeOfCommodity: [...prevData.typeOfCommodity, newCommodity],
-      }));
-      setNewCommodity({ code: '', commodity: '', description: '' }); // Clear input fields after adding
+  const handleAddressChange = (type, field, value) => {
+    if (type === "residential") {
+      setResidentialAddress((prev) => ({ ...prev, [field]: value }));
+    } else {
+      setPermanentAddress((prev) => ({ ...prev, [field]: value }));
     }
   };
 
-  const handleDeleteCommodity = (index) => {
-    setFormData((prevData) => ({
-      ...prevData,
-      typeOfCommodity: prevData.typeOfCommodity.filter((_, i) => i !== index),
+  const handleEconomicActivityChange = (activity) => {
+    setEconomicActivity((prev) => ({
+      ...prev,
+      [activity]: !prev[activity],
     }));
+  };
+
+  const handleCommodityChange = (field, value) => {
+    setCommodity((prev) => ({ ...prev, [field]: value }));
+  };
+
+  const handleAddCommodity = () => {
+    if (commodity.commodity && commodity.code) {
+      setCommodityList((prev) => [
+        ...prev,
+        {
+          act: "VAT",
+          code: commodity.code,
+          commodity: commodity.commodity,
+          description: commodity.description,
+        },
+      ]);
+      setCommodity({ code: "", commodity: "Battery water, De-mineralised water", description: "" });
+    }
+  };
+
+  const handleDeleteCommodity = (idx) => {
+    setCommodityList((prev) => prev.filter((_, i) => i !== idx));
   };
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    console.log('Part B Form Data:', formData);
-    if (onNext) {
-      onNext(formData);
-    }
+    // Collect all data and pass to parent
+    onNext &&
+      onNext({
+        residentialAddress,
+        permanentAddress,
+        statAuthority,
+        statAuthorityOther,
+        economicActivity,
+        commodityList,
+        firstTaxableSale,
+        vatType,
+        cotType,
+        turnover,
+        filingFreq,
+      });
   };
 
   return (
-    // Overall page background - Secondary Blue (rgb(213, 225, 240))
     <div className="min-h-screen bg-[#D5E1F0] p-4 font-sans flex items-center justify-center">
       <div className="bg-white p-6 rounded-lg shadow-lg w-full max-w-4xl">
-        {/* Page Title */}
-        <h2 className="text-2xl font-bold text-center text-red-600 mb-6">Part B</h2>
-        
-        {/* Header Strip - Primary Blue (rgb(41, 77, 116)) */}
-        <div className="bg-[#294D74] text-white p-3 rounded-t-lg mb-4 text-center">
-          <h3 className="text-lg font-semibold">.:e-Registration-Inspector Note :.</h3>
+        {/* Topbar */}
+        <div className="bg-[#5CA5FE] text-white p-3 rounded-t-lg mb-4 flex justify-between items-center">
+          <span className="font-semibold">::e-Registration-Inspector Note</span>
+          <a href="#" className="text-white underline text-xs">Sign Out</a>
         </div>
-
-        <div className="grid grid-cols-1 md:grid-cols-4 gap-4 mb-6 text-sm">
-          {/* Left Navigation Panel - Primary Blue (rgb(41, 77, 116)) */}
-          <div className="col-span-1 md:col-span-1 bg-[#294D74] text-white p-4 rounded-lg flex flex-col space-y-2 text-xs">
-            <h4 className="font-bold mb-2">Ack.No.: 12633089</h4>
-            <a href="#" className="hover:underline py-1 px-2 block">Part (A)</a>
-            {/* Active Navigation Link - Secondary Blue background, Text Black */}
-            <a href="#" className="bg-[#D5E1F0] text-black font-bold py-1 px-2 rounded block">Part (B)</a>
-            <a href="#" className="hover:underline py-1 px-2 block">CST</a>
-            <a href="#" className="hover:underline py-1 px-2 block">Part (C)</a>
-            <a href="#" className="hover:underline py-1 px-2 block">Bank Info</a>
-            <a href="#" className="hover:underline py-1 px-2 block">Additional Business Places</a>
-            <a href="#" className="hover:underline py-1 px-2 block">Business Partner details</a>
-            <a href="#" className="hover:underline py-1 px-2 block">Documents</a>
-            <a href="#" className="hover:underline py-1 px-2 block">Finish</a>
-          </div>
-
-          {/* Main Form Content */}
-          <form onSubmit={handleSubmit} className="col-span-1 md:col-span-3 space-y-4">
-            {/* Dealer Address - Secondary Blue content area */}
-            <div className="bg-[#D5E1F0] p-4 rounded-lg border border-[#C0D0E0]">
-              <h4 className="font-semibold text-[#294D74] mb-3 text-sm">1. Dealer Address<span className="text-red-600 font-bold">*</span></h4>
-              <textarea
-                name="dealerAddress"
-                value={formData.dealerAddress}
-                onChange={handleChange}
-                className="p-1 border border-[#C0D0E0] rounded-sm w-full h-auto text-xs bg-white focus:outline-none focus:ring-1 focus:ring-blue-500"
-                rows="3"
-                required
-              ></textarea>
-            </div>
-
-            {/* Warehouse Address - Secondary Blue content area */}
-            <div className="bg-[#D5E1F0] p-4 rounded-lg border border-[#C0D0E0]">
-              <h4 className="font-semibold text-[#294D74] mb-3 text-sm">2. Warehouse Address<span className="text-red-600 font-bold">*</span></h4>
-              <textarea
-                name="warehouseAddress"
-                value={formData.warehouseAddress}
-                onChange={handleChange}
-                className="p-1 border border-[#C0D0E0] rounded-sm w-full h-auto text-xs bg-white focus:outline-none focus:ring-1 focus:ring-blue-500"
-                rows="3"
-                required
-              ></textarea>
-            </div>
-
-            {/* Principle Place of Business - Secondary Blue content area */}
-            <div className="bg-[#D5E1F0] p-4 rounded-lg border border-[#C0D0E0]">
-              <h4 className="font-semibold text-[#294D74] mb-3 text-sm">3. Principle Place of Business<span className="text-red-600 font-bold">*</span></h4>
-              <select
-                name="principlePlaceOfBusiness"
-                value={formData.principlePlaceOfBusiness}
-                onChange={handleChange}
-                className="p-1 border border-[#C0D0E0] rounded-sm w-full h-7 text-xs bg-white focus:outline-none focus:ring-1 focus:ring-blue-500"
-                required
-              >
-                <option value="Same as dealer address">Same as dealer address</option>
-                <option value="Other address">Other address</option>
-              </select>
-            </div>
-
-            {/* Business Type - Secondary Blue content area */}
-            <div className="bg-[#D5E1F0] p-4 rounded-lg border border-[#C0D0E0]">
-              <h4 className="font-semibold text-[#294D74] mb-3 text-sm">4. Business Type<span className="text-red-600 font-bold">*</span></h4>
-              <select
-                name="businessType"
-                value={formData.businessType}
-                onChange={handleChange}
-                className="p-1 border border-[#C0D0E0] rounded-sm w-full h-7 text-xs bg-white focus:outline-none focus:ring-1 focus:ring-blue-500"
-                required
-              >
-                <option value="Retailer">Retailer</option>
-                <option value="Wholesaler">Wholesaler</option>
-                <option value="Manufacturer">Manufacturer</option>
-              </select>
-            </div>
-
-            {/* Type of Commodity / Goods Manufactured - Secondary Blue content area */}
-            <div className="bg-[#D5E1F0] p-4 rounded-lg border border-[#C0D0E0]">
-              <h4 className="font-semibold text-[#294D74] mb-3 text-sm">5. Type of Commodity / Goods Manufactured</h4>
-              <div className="grid grid-cols-1 md:grid-cols-3 gap-3 mb-4">
-                <input
-                  type="text"
-                  name="code"
-                  placeholder="Add Code"
-                  value={newCommodity.code}
-                  onChange={handleCommodityChange}
-                  className="p-1 border border-[#C0D0E0] rounded-sm focus:outline-none focus:ring-1 focus:ring-blue-500 w-full h-7 text-xs bg-white"
-                />
-                <select
-                  name="commodity"
-                  value={newCommodity.commodity}
-                  onChange={handleCommodityChange}
-                  className="p-1 border border-[#C0D0E0] rounded-sm focus:outline-none focus:ring-1 focus:ring-blue-500 w-full h-7 text-xs bg-white"
-                >
-                  <option value="">Select Commodity</option>
-                  <option value="Battery water, De-mineralised water">Battery water, De-mineralised water</option>
-                  <option value="Other Commodity">Other Commodity</option>
-                </select>
-                <input
-                  type="text"
-                  name="description"
-                  placeholder="Enter Description"
-                  value={newCommodity.description}
-                  onChange={handleCommodityChange}
-                  className="p-1 border border-[#C0D0E0] rounded-sm focus:outline-none focus:ring-1 focus:ring-blue-500 w-full h-7 text-xs bg-white"
-                />
-                {/* Add Button - Button Blue (rgb(66, 139, 202)) */}
+        <div className="flex">
+          {/* Sidebar */}
+    
+          {/* Main Form */}
+          <main className="flex-1">
+            <h2 className="text-2xl font-bold text-center text-red-600 mb-6">Part B</h2>
+            <form onSubmit={handleSubmit}>
+              {/* 8. Address */}
+              <fieldset className="border border-gray-300 rounded mb-4 p-4">
+                <legend className="font-semibold">8. Address</legend>
+                {/* a) Residential Address */}
+                <fieldset className="border border-gray-200 rounded mb-4 p-4">
+                  <legend className="font-semibold">a) Residential Address</legend>
+                  <div className="flex flex-wrap gap-2 mb-2 items-center">
+                    <label className="w-44 text-xs">Number & Street</label>
+                    <input
+                      type="text"
+                      className="flex-1 p-1 border border-gray-300 rounded text-xs"
+                      value={residentialAddress.numberAndStreet}
+                      onChange={e => handleAddressChange("residential", "numberAndStreet", e.target.value)}
+                      placeholder="LECHUBABAN"
+                    />
+                  </div>
+                  <div className="flex flex-wrap gap-2 mb-2 items-center">
+                    <label className="w-44 text-xs">Village/Town/City</label>
+                    <input
+                      type="text"
+                      className="flex-1 p-1 border border-gray-300 rounded text-xs"
+                      value={residentialAddress.villageTownCity}
+                      onChange={e => handleAddressChange("residential", "villageTownCity", e.target.value)}
+                      placeholder="AGARTALA"
+                    />
+                  </div>
+                  <div className="flex flex-wrap gap-2 mb-2 items-center">
+                    <label className="w-44 text-xs">District</label>
+                    <select
+                      className="p-1 border border-gray-300 rounded text-xs"
+                      value={residentialAddress.district}
+                      onChange={e => handleAddressChange("residential", "district", e.target.value)}
+                    >
+                      <option>West Tripura</option>
+                    </select>
+                    <label className="w-16 text-xs ml-2">State</label>
+                    <select
+                      className="p-1 border border-gray-300 rounded text-xs w-40"
+                      value={residentialAddress.state}
+                      onChange={e => handleAddressChange("residential", "state", e.target.value)}
+                    >
+                      <option>TRIPURA</option>
+                    </select>
+                  </div>
+                  <div className="flex flex-wrap gap-2 mb-2 items-center">
+                    <label className="w-44 text-xs">PIN Code</label>
+                    <input
+                      type="text"
+                      className="p-1 border border-gray-300 rounded text-xs w-32"
+                      value={residentialAddress.pinCode}
+                      onChange={e => handleAddressChange("residential", "pinCode", e.target.value)}
+                      placeholder="799010"
+                    />
+                    <label className="w-20 text-xs ml-2">Country</label>
+                    <select
+                      className="p-1 border border-gray-300 rounded text-xs w-40"
+                      value={residentialAddress.country}
+                      onChange={e => handleAddressChange("residential", "country", e.target.value)}
+                    >
+                      <option>INDIA</option>
+                    </select>
+                  </div>
+                </fieldset>
+                {/* b) Permanent Address */}
+                <fieldset className="border border-gray-200 rounded mb-2 p-4">
+                  <legend className="font-semibold">b) Permanent Address</legend>
+                  <div className="flex flex-wrap gap-2 mb-2 items-center">
+                    <label className="w-44 text-xs">Number & Street</label>
+                    <input
+                      type="text"
+                      className="flex-1 p-1 border border-gray-300 rounded text-xs"
+                      value={permanentAddress.numberAndStreet}
+                      onChange={e => handleAddressChange("permanent", "numberAndStreet", e.target.value)}
+                      placeholder="LECHUBABAN"
+                    />
+                  </div>
+                  <div className="flex flex-wrap gap-2 mb-2 items-center">
+                    <label className="w-44 text-xs">Village/Town/City</label>
+                    <input
+                      type="text"
+                      className="flex-1 p-1 border border-gray-300 rounded text-xs"
+                      value={permanentAddress.villageTownCity}
+                      onChange={e => handleAddressChange("permanent", "villageTownCity", e.target.value)}
+                      placeholder="AGARTALA"
+                    />
+                  </div>
+                  <div className="flex flex-wrap gap-2 mb-2 items-center">
+                    <label className="w-44 text-xs">District</label>
+                    <select
+                      className="p-1 border border-gray-300 rounded text-xs"
+                      value={permanentAddress.district}
+                      onChange={e => handleAddressChange("permanent", "district", e.target.value)}
+                    >
+                      <option>West Tripura</option>
+                    </select>
+                    <label className="w-16 text-xs ml-2">State</label>
+                    <select
+                      className="p-1 border border-gray-300 rounded text-xs w-40"
+                      value={permanentAddress.state}
+                      onChange={e => handleAddressChange("permanent", "state", e.target.value)}
+                    >
+                      <option>TRIPURA</option>
+                    </select>
+                  </div>
+                  <div className="flex flex-wrap gap-2 mb-2 items-center">
+                    <label className="w-44 text-xs">PIN Code</label>
+                    <input
+                      type="text"
+                      className="p-1 border border-gray-300 rounded text-xs w-32"
+                      value={permanentAddress.pinCode}
+                      onChange={e => handleAddressChange("permanent", "pinCode", e.target.value)}
+                      placeholder="799010"
+                    />
+                    <label className="w-20 text-xs ml-2">Country</label>
+                    <select
+                      className="p-1 border border-gray-300 rounded text-xs w-40"
+                      value={permanentAddress.country}
+                      onChange={e => handleAddressChange("permanent", "country", e.target.value)}
+                    >
+                      <option>INDIA</option>
+                    </select>
+                  </div>
+                </fieldset>
+              </fieldset>
+              {/* 9. Statutory Authority */}
+              <fieldset className="border border-gray-300 rounded mb-4 p-4">
+                <legend className="font-semibold">9. Name of the Statutory Authority with whom already registered</legend>
+                <div className="mb-2">
+                  <select
+                    className="p-1 border border-gray-300 rounded text-xs w-full"
+                    value={statAuthority}
+                    onChange={e => setStatAuthority(e.target.value)}
+                  >
+                    <option>REGISTER OF COMPANIES</option>
+                    <option>Others</option>
+                  </select>
+                </div>
+                {statAuthority === "Others" && (
+                  <div className="mb-2 flex items-center gap-2">
+                    <label className="text-xs">If Others, enter description:</label>
+                    <input
+                      type="text"
+                      className="flex-1 p-1 border border-gray-300 rounded text-xs"
+                      value={statAuthorityOther}
+                      onChange={e => setStatAuthorityOther(e.target.value)}
+                    />
+                  </div>
+                )}
+              </fieldset>
+              {/* 10. Economic Activity Code */}
+              <fieldset className="border border-gray-300 rounded mb-4 p-4">
+                <legend className="font-semibold">10. Economic Activity Code *</legend>
+                <div className="flex flex-wrap gap-4">
+                  {Object.keys(economicActivity).map((activity) => (
+                    <label key={activity} className="text-xs flex items-center gap-1">
+                      <input
+                        type="checkbox"
+                        checked={economicActivity[activity]}
+                        onChange={() => handleEconomicActivityChange(activity)}
+                      />
+                      {activity}
+                    </label>
+                  ))}
+                </div>
+              </fieldset>
+              {/* 11. Major Commodity / Traded / Manufactured */}
+              <fieldset className="border border-gray-300 rounded mb-4 p-4">
+                <legend className="font-semibold">11. Major Commodity / Traded / Manufactured</legend>
+                <div className="flex flex-wrap gap-2 mb-2 items-center">
+                  <label className="w-44 text-xs">Select Commodity</label>
+                  <select
+                    className="flex-1 p-1 border border-gray-300 rounded text-xs"
+                    value={commodity.commodity}
+                    onChange={e => handleCommodityChange("commodity", e.target.value)}
+                  >
+                    <option>Battery water, De-mineralised water</option>
+                    <option>Other Commodity</option>
+                  </select>
+                </div>
+                <div className="flex flex-wrap gap-2 mb-2 items-center">
+                  <label className="w-44 text-xs">Dealer's description of commodity</label>
+                  <input
+                    type="text"
+                    className="flex-1 p-1 border border-gray-300 rounded text-xs"
+                    value={commodity.description}
+                    onChange={e => handleCommodityChange("description", e.target.value)}
+                  />
+                </div>
+                <div className="flex flex-wrap gap-2 mb-2 items-center">
+                  <label className="w-44 text-xs">Code</label>
+                  <input
+                    type="text"
+                    className="flex-1 p-1 border border-gray-300 rounded text-xs"
+                    value={commodity.code}
+                    onChange={e => handleCommodityChange("code", e.target.value)}
+                  />
+                  <button
+                    type="button"
+                    className="bg-[#5CA5FE] text-white px-3 py-1 rounded text-xs ml-2"
+                    onClick={handleAddCommodity}
+                  >
+                    [+] Add
+                  </button>
+                </div>
+                <table className="w-full border border-gray-300 rounded mt-2 text-xs">
+                  <thead>
+                    <tr className="bg-blue-100">
+                      <th className="py-1 px-2 border-b text-left">Act</th>
+                      <th className="py-1 px-2 border-b text-left">Code</th>
+                      <th className="py-1 px-2 border-b text-left">Commodity</th>
+                      <th className="py-1 px-2 border-b text-left">Dealer's description</th>
+                      <th className="py-1 px-2 border-b text-left">Action</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    {commodityList.map((item, idx) => (
+                      <tr key={idx}>
+                        <td className="py-1 px-2">{item.act}</td>
+                        <td className="py-1 px-2">{item.code}</td>
+                        <td className="py-1 px-2">{item.commodity}</td>
+                        <td className="py-1 px-2">{item.description}</td>
+                        <td className="py-1 px-2">
+                          <button
+                            type="button"
+                            className="text-red-600 underline text-xs"
+                            onClick={() => handleDeleteCommodity(idx)}
+                          >
+                            Delete
+                          </button>
+                        </td>
+                      </tr>
+                    ))}
+                  </tbody>
+                </table>
+              </fieldset>
+              {/* 12. Date of first Taxable Sale */}
+              <fieldset className="border border-gray-300 rounded mb-4 p-4">
+                <legend className="font-semibold">12. Date of first Taxable Sale</legend>
+                <div className="flex flex-wrap gap-2 items-center">
+                  <label className="text-xs">(DD/MM/YYYY)</label>
+                  <input
+                    type="date"
+                    className="p-1 border border-gray-300 rounded text-xs"
+                    value={firstTaxableSale}
+                    onChange={e => setFirstTaxableSale(e.target.value)}
+                  />
+                  <button type="button" className="bg-[#5CA5FE] text-white px-3 py-1 rounded text-xs ml-2">
+                    Submit Query
+                  </button>
+                </div>
+              </fieldset>
+              {/* 13. Do you wish to register for VAT, COT..? */}
+              <fieldset className="border border-gray-300 rounded mb-4 p-4">
+                <legend className="font-semibold">13. Do you wish to register for VAT , COT..?</legend>
+                <div className="flex flex-wrap gap-2 mb-2 items-center">
+                  <select
+                    className="p-1 border border-gray-300 rounded text-xs"
+                    value={vatType}
+                    onChange={e => setVatType(e.target.value)}
+                  >
+                    <option>Normal VAT</option>
+                  </select>
+                </div>
+                <div className="flex flex-col gap-1">
+                  <label className="text-xs flex items-center gap-1">
+                    <input
+                      type="radio"
+                      name="cotType"
+                      value="Dealer"
+                      checked={cotType === "Dealer"}
+                      onChange={e => setCotType(e.target.value)}
+                    />
+                    Dealer
+                  </label>
+                  <label className="text-xs flex items-center gap-1">
+                    <input
+                      type="radio"
+                      name="cotType"
+                      value="Hotelier"
+                      checked={cotType === "Hotelier"}
+                      onChange={e => setCotType(e.target.value)}
+                    />
+                    Hotelier / Restaurateur / Caterer / Sweet meat stall / Bakery / Ice-cream Parlour
+                  </label>
+                  <label className="text-xs flex items-center gap-1">
+                    <input
+                      type="radio"
+                      name="cotType"
+                      value="StoneCrushing"
+                      checked={cotType === "StoneCrushing"}
+                      onChange={e => setCotType(e.target.value)}
+                    />
+                    Mechanised Stone Crushing and Granite Crushing units
+                  </label>
+                  <label className="text-xs flex items-center gap-1">
+                    <input
+                      type="radio"
+                      name="cotType"
+                      value="WorksContractor"
+                      checked={cotType === "WorksContractor"}
+                      onChange={e => setCotType(e.target.value)}
+                    />
+                    Works Contractor
+                  </label>
+                </div>
+              </fieldset>
+              {/* 14. Turnover estimated for 12 months/Quarters */}
+              <fieldset className="border border-gray-300 rounded mb-4 p-4">
+                <legend className="font-semibold">14. Turnover estimated for 12 months/Quarters *</legend>
+                <div className="flex flex-wrap gap-2 items-center">
+                  <input
+                    type="text"
+                    className="p-1 border border-gray-300 rounded text-xs"
+                    value={turnover}
+                    onChange={e => setTurnover(e.target.value)}
+                    placeholder="10000"
+                  />
+                </div>
+              </fieldset>
+              {/* 15. Frequency of filing returns */}
+              <fieldset className="border border-gray-300 rounded mb-4 p-4">
+                <legend className="font-semibold">15. Frequency of filing returns</legend>
+                <div className="flex flex-wrap gap-4">
+                  <label className="text-xs flex items-center gap-1">
+                    <input
+                      type="radio"
+                      name="filingFreq"
+                      value="Monthly"
+                      checked={filingFreq === "Monthly"}
+                      onChange={e => setFilingFreq(e.target.value)}
+                    />
+                    Monthly
+                  </label>
+                  <label className="text-xs flex items-center gap-1">
+                    <input
+                      type="radio"
+                      name="filingFreq"
+                      value="Quarterly"
+                      checked={filingFreq === "Quarterly"}
+                      onChange={e => setFilingFreq(e.target.value)}
+                    />
+                    Quarterly
+                  </label>
+                </div>
+              </fieldset>
+              {/* Navigation Buttons */}
+              <div className="flex justify-end gap-2 mt-4">
                 <button
                   type="button"
-                  onClick={handleAddCommodity}
-                  className="bg-[#428BCA] text-white py-1 px-2 rounded-sm hover:bg-blue-700 col-span-full md:col-span-1 w-full h-7 text-xs"
+                  className="bg-gray-600 text-white px-6 py-2 rounded hover:bg-gray-700 text-sm font-bold"
+                  onClick={onPrevious}
                 >
-                  [+] Add
+                  Previous
+                </button>
+                <button
+                  type="submit"
+                  className="bg-[#5CA5FE] text-white px-6 py-2 rounded hover:bg-blue-700 text-sm font-bold"
+                >
+                  Next
                 </button>
               </div>
-
-              {formData.typeOfCommodity.length > 0 && (
-                <div className="mt-4">
-                  <h5 className="font-semibold mb-2 text-xs text-[#294D74]">List of Commodities:</h5>
-                  <div className="overflow-x-auto"> {/* Added for horizontal scrolling on small screens */}
-                    <table className="min-w-full bg-white border border-[#C0D0E0] rounded-md text-xs">
-                      <thead>
-                        <tr className="bg-blue-100">
-                          <th className="py-1 px-2 border-b text-left text-gray-700">Code</th>
-                          <th className="py-1 px-2 border-b text-left text-gray-700">Commodity</th>
-                          <th className="py-1 px-2 border-b text-left text-gray-700">Description</th>
-                          <th className="py-1 px-2 border-b text-left text-gray-700">Actions</th>
-                        </tr>
-                      </thead>
-                      <tbody>
-                        {formData.typeOfCommodity.map((item, index) => (
-                          <tr key={index} className="border-b last:border-b-0">
-                            <td className="py-1 px-2 text-gray-700">{item.code}</td>
-                            <td className="py-1 px-2 text-gray-700">{item.commodity}</td>
-                            <td className="py-1 px-2 text-gray-700">{item.description}</td>
-                            <td className="py-1 px-2">
-                              <button
-                                type="button"
-                                onClick={() => handleDeleteCommodity(index)}
-                                className="text-red-600 hover:text-red-800 text-xs"
-                              >
-                                Delete
-                              </button>
-                            </td>
-                          </tr>
-                        ))}
-                      </tbody>
-                    </table>
-                  </div>
-                </div>
-              )}
-            </div>
-
-            {/* Dealer's description of commodity - Secondary Blue content area */}
-            <div className="bg-[#D5E1F0] p-4 rounded-lg border border-[#C0D0E0]">
-              <h4 className="font-semibold text-[#294D74] mb-3 text-sm">Dealer's description of commodity</h4>
-              <textarea
-                name="commodityDescription"
-                value={formData.commodityDescription}
-                onChange={handleChange}
-                className="p-1 border border-[#C0D0E0] rounded-sm w-full h-auto text-xs bg-white focus:outline-none focus:ring-1 focus:ring-blue-500"
-                rows="3"
-              ></textarea>
-            </div>
-
-            {/* Date of Commencement of Business - Secondary Blue content area */}
-            <div className="bg-[#D5E1F0] p-4 rounded-lg border border-[#C0D0E0]">
-              <h4 className="font-semibold text-[#294D74] mb-3 text-sm">6. Date of Commencement of Business<span className="text-red-600 font-bold">*</span> (DD/MM/YYYY)</h4>
-              <input
-                type="date"
-                name="dateOfCommencementOfBusiness"
-                value={formData.dateOfCommencementOfBusiness}
-                onChange={handleChange}
-                className="p-1 border border-[#C0D0E0] rounded-sm w-full h-7 text-xs bg-white focus:outline-none focus:ring-1 focus:ring-blue-500"
-                required
-              />
-            </div>
-
-            {/* Date of Commencement of Liability - Secondary Blue content area */}
-            <div className="bg-[#D5E1F0] p-4 rounded-lg border border-[#C0D0E0]">
-              <h4 className="font-semibold text-[#294D74] mb-3 text-sm">7. Date of Commencement of Liability<span className="text-red-600 font-bold">*</span> (DD/MM/YYYY)</h4>
-              <input
-                type="date"
-                name="dateOfCommencementOfLiability"
-                value={formData.dateOfCommencementOfLiability}
-                onChange={handleChange}
-                className="p-1 border border-[#C0D0E0] rounded-sm w-full h-7 text-xs bg-white focus:outline-none focus:ring-1 focus:ring-blue-500"
-                required
-              />
-            </div>
-
-            {/* Previous Registration Number (if any) - Secondary Blue content area */}
-            <div className="bg-[#D5E1F0] p-4 rounded-lg border border-[#C0D0E0]">
-              <h4 className="font-semibold text-[#294D74] mb-3 text-sm">8. Previous Registration Number (if any)</h4>
-              <input
-                type="text"
-                name="previousRegistrationNumber"
-                value={formData.previousRegistrationNumber}
-                onChange={handleChange}
-                className="p-1 border border-[#C0D0E0] rounded-sm w-full h-7 text-xs bg-white focus:outline-none focus:ring-1 focus:ring-blue-500"
-              />
-            </div>
-
-            {/* Previous Act - Secondary Blue content area */}
-            <div className="bg-[#D5E1F0] p-4 rounded-lg border border-[#C0D0E0]">
-              <h4 className="font-semibold text-[#294D74] mb-3 text-sm">9. Previous Act</h4>
-              <input
-                type="text"
-                name="previousAct"
-                value={formData.previousAct}
-                onChange={handleChange}
-                className="p-1 border border-[#C0D0E0] rounded-sm w-full h-7 text-xs bg-white focus:outline-none focus:ring-1 focus:ring-blue-500"
-              />
-            </div>
-
-            {/* Frequency of Filing Returns - Secondary Blue content area */}
-            <div className="bg-[#D5E1F0] p-4 rounded-lg border border-[#C0D0E0]">
-              <h4 className="font-semibold text-[#294D74] mb-3 text-sm">10. Frequency of Filing Returns</h4>
-              <select
-                name="frequencyOfFiling"
-                value={formData.frequencyOfFiling}
-                onChange={handleChange}
-                className="p-1 border border-[#C0D0E0] rounded-sm w-full h-7 text-xs bg-white focus:outline-none focus:ring-1 focus:ring-blue-500"
-              >
-                <option value="Monthly">Monthly</option>
-                <option value="Quarterly">Quarterly</option>
-                <option value="Half-Yearly">Half-Yearly</option>
-                <option value="Annually">Annually</option>
-              </select>
-            </div>
-
-            {/* TIN Number - Secondary Blue content area */}
-            <div className="bg-[#D5E1F0] p-4 rounded-lg border border-[#C0D0E0]">
-              <h4 className="font-semibold text-[#294D74] mb-3 text-sm">TIN Number (as per screenshot)</h4>
-              <input
-                type="text"
-                name="tinNumber"
-                value={formData.tinNumber}
-                onChange={handleChange}
-                className="p-1 border border-[#C0D0E0] rounded-sm w-full h-7 text-xs bg-white focus:outline-none focus:ring-1 focus:ring-blue-500"
-              />
-            </div>
-
-            {/* Navigation Buttons */}
-            <div className="flex justify-between mt-6">
-              {/* Previous Button - Gray background, White text */}
-              <button
-                type="button"
-                onClick={onPrevious}
-                className="bg-gray-600 text-white py-2 px-6 rounded-md hover:bg-gray-700 focus:outline-none focus:ring-2 focus:ring-gray-500 focus:ring-offset-2 text-sm font-bold"
-              >
-                Previous
-              </button>
-              {/* Next Button - Button Blue (rgb(66, 139, 202)) */}
-              <button
-                type="submit"
-                className="bg-[#428BCA] text-white py-2 px-6 rounded-md hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 text-sm font-bold"
-              >
-                Next
-              </button>
-            </div>
-          </form>
+            </form>
+          </main>
         </div>
       </div>
     </div>
