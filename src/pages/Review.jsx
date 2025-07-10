@@ -1,12 +1,17 @@
 import React, { useEffect, useState } from 'react'
+import { useNavigate } from 'react-router-dom';
+import Head from '../components/Head';
 
 const API_BASE_URL_CHECKER = 'https://vat-portal-backend-nic.onrender.com';
 
 const Review = ({userRole, userData}) => {
     const[data, setData] = useState([]);
+    const[loading, setLoading] = useState(false);
+    const navigate = useNavigate();
 
     useEffect(()=>{
         const fetchData = async () => {
+            setLoading(true);
             try {
                 let url = `${API_BASE_URL_CHECKER}/api/registration`;
 
@@ -34,8 +39,10 @@ const Review = ({userRole, userData}) => {
                 const result = await response.json();
                 console.log("Data fetched at review.js:", result);
                 setData(result);
+                setLoading(false);
             } catch (error) {
                 console.error("Error fetching data at review.js:", error);
+                setLoading(false);
             }
         }
 
@@ -45,23 +52,19 @@ const Review = ({userRole, userData}) => {
 
     }, [userData, userRole])
     
-
+    const onSelectClick=(item) =>{
+        navigate(`/form/partA/${item.tinNumber}`)
+    }
 
     return (
         <div>
-            <div className='mb-12'>
-                {
-                    userRole === "checker" ? (
-                        <div className="text-center text-2xl font-semibold mt-20 bg-blue-400 text-white">
-                            :.e-Registration-Inspector Note.:
-                        </div>
-                    ) : (
-                        <div className="text-center text-2xl font-semibold mt-20 bg-blue-400 text-white">
-                            :.e-Registration-Approval.:
-                        </div>
-                    )
-                }
-            </div>
+            <Head userRole={userRole}/>
+                
+            {loading && 
+                <div className='text-center text-lg font-bold mb-4'>
+                    LOADING...
+                </div>
+            }
 
             <div className='mb-12 pl-4 pr-4 overflow-x-auto'>
                 <table className='table-auto w-full border border-gray-300 text-sm text-left'>
@@ -82,13 +85,14 @@ const Review = ({userRole, userData}) => {
                     <tbody>
                         {data.map((item, index) => (
                             <tr key={index}>
-                                <td className='px-4 py-2 bg-yellow-50 text-blue-600 underline cursor-pointer'>Select</td>
+                                <td className='px-4 py-2 bg-yellow-50 text-blue-600 underline cursor-pointer' onClick={()=>onSelectClick(item)} >Select</td>
                                 <td className='px-4 py-2'>{item.tinNumber}</td>
                                 <td className='px-4 py-2'>{item.ackNo}</td>
                                 <td className='px-4 py-2'>
                                     {item.createdAt
-                                        ? new Date(item.createdAt).toLocaleDateString("en-GB") // DD/MM/YYYY
-                                        : "N/A"}
+                                        ? new Date(item.createdAt).toLocaleDateString("en-GB")
+                                        : "N/A"
+                                    }
                                 </td>
                                 <td className='px-4 py-2'>{item.applicantName}</td>
                                 <td className='px-4 py-2'>{item.tradeName}</td>
