@@ -1,23 +1,93 @@
 import React, { useState, useEffect } from 'react';
+import Cookies from 'js-cookie';
 
 const AssignmentForm = ({ data, onBack, isDisabled = false }) => {
   const [inspector, setInspector] = useState('');
+  const [inspectorList, setInspectorList] = useState([]);
   const [assigned, setAssigned] = useState(false);
+  const [error, setError] = useState(null);
+  const [successMsg, setSuccessMsg] = useState('');
 
-  // Reset form when data changes
+  const ackNo = data?.ackNo;
+
+  useEffect(() => {
+    const fetchInspectors = async () => {
+      const token = Cookies.get('authToken');
+      if (!token) {
+        setError('Authentication token not found.');
+        return;
+      }
+
+      try {
+        const response = await fetch(
+          'https://vat-portal-backend-nic.onrender.com/api/inspectors',
+          {
+            headers: {
+              Authorization: `Bearer ${token}`,
+              'Content-Type': 'application/json',
+            },
+          }
+        );
+
+        if (!response.ok) throw new Error('Failed to fetch inspectors');
+
+        const inspectorData = await response.json();
+        setInspectorList(inspectorData);
+        setError(null);
+      } catch (err) {
+        console.error('Error fetching inspectors:', err);
+        setError(err.message);
+      }
+    };
+
+    if (data) {
+      fetchInspectors();
+    }
+  }, [data]);
+
   useEffect(() => {
     setInspector('');
     setAssigned(false);
+    setSuccessMsg('');
   }, [data]);
 
-  // If there's no data and not in disabled mode, return nothing
   if (!data && !isDisabled) return null;
 
-  const handleAssign = () => {
-    if (inspector) {
-      setAssigned(true);
-    } else {
+  const handleAssign = async () => {
+    if (!inspector) {
       alert('Please select an inspector.');
+      return;
+    }
+
+    const token = Cookies.get('authToken');
+    if (!token) {
+      alert('Authentication token not found.');
+      return;
+    }
+
+    try {
+      const response = await fetch(
+        `https://vat-portal-backend-nic.onrender.com/api/assign/${ackNo}`,
+        {
+          method: 'PUT',
+          headers: {
+            Authorization: `Bearer ${token}`,
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify({ assignedTo: inspector }),
+        }
+      );
+
+      if (!response.ok) {
+        const errorData = await response.json();
+        throw new Error(errorData.message || 'Assignment failed');
+      }
+
+      setAssigned(true);
+      setSuccessMsg(`${ackNo} assigned to ${inspector}`);
+    } catch (err) {
+      console.error('Error during assignment:', err);
+      setError(err.message);
     }
   };
 
@@ -48,7 +118,14 @@ const AssignmentForm = ({ data, onBack, isDisabled = false }) => {
       <div className="mb-4">
         <label className="block text-sm font-semibold mb-1">Registration Types:</label>
         <div className="flex flex-wrap gap-4 text-sm">
-          {["VAT/CST Registration", "Transporter Registration", "Registration Amendment", "De-Registration (VAT/CST)", "Transfer", "Suspension/Revoke"].map((type, i) => (
+          {[
+            'VAT/CST Registration',
+            'Transporter Registration',
+            'Registration Amendment',
+            'De-Registration (VAT/CST)',
+            'Transfer',
+            'Suspension/Revoke',
+          ].map((type, i) => (
             <label key={i}>
               <input type="radio" name="regtype" className="mr-1" disabled /> {type}
             </label>
@@ -94,10 +171,13 @@ const AssignmentForm = ({ data, onBack, isDisabled = false }) => {
             disabled={isDisabled}
           >
             <option value="">-- Select Inspector --</option>
-            <option value="Kabita Das">Kabita Das</option>
-            <option value="Inspector A">Inspector A</option>
-            <option value="Inspector B">Inspector B</option>
+            {inspectorList.map((insp, index) => (
+              <option key={index} value={insp.username}>
+                {insp.username} - {insp.designation}
+              </option>
+            ))}
           </select>
+          {error && <p className="text-red-600 text-sm mt-1">{error}</p>}
         </div>
       </div>
 
@@ -147,9 +227,9 @@ const AssignmentForm = ({ data, onBack, isDisabled = false }) => {
       </div>
 
       {/* Assignment Message */}
-      {assigned && inspector && (
-        <p className="mt-4 text-center text-red-600 font-semibold text-sm">
-          {data.ackNo} assigned to {inspector}
+      {assigned && successMsg && (
+        <p className="mt-4 text-center text-green-600 font-semibold text-sm">
+          ✅ {successMsg}
         </p>
       )}
     </div>
