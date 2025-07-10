@@ -9,6 +9,10 @@ import Review from "./pages/Review";
 import PartA from "./forms/PartA";
 import MainForm from "./forms/MainForm";
 
+//for testing
+import PartAForm from "./forms/PartA";
+import PartBForm from "./forms/PartB";
+
 function App() {
   const [userRole, setUserRole] = useState("");
   const [userData, setUserData] = useState(null);
@@ -58,6 +62,7 @@ function App() {
             path="/reviewpage"
             element={userRole ? <Review userRole={userRole} userData={userData}/> : <Navigate to="/" />}
           />
+          
 
           <Route path="/form" element={userRole ? <MainForm userRole={userRole}/> : <Navigate to="/" />}>
             <Route path="partA/:tinNumber" element={<PartA userRole={userRole} userData={userData}/>}/>
@@ -75,3 +80,4 @@ function App() {
 }
 
 export default App;
+
