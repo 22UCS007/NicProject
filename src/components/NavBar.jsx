@@ -2,13 +2,14 @@
 
 import React, { useState } from "react";
 import { ChevronDown, ChevronRight } from "lucide-react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 
 const NavBar = ({ userRole ,onSignOut}) => {
   const [isERegDropdownOpen, setIsERegDropdownOpen] = useState(false);
   const [isReturnsDropdownOpen, setIsReturnsDropdownOpen] = useState(false);
   const [isApprovalSubOpen, setIsApprovalSubOpen] = useState(false);
   const [isInspectorNoteOpen, setIsInspectorNoteOpen] = useState(false);
+  const navigate = useNavigate();
  
 
   const handleSignOut = () => {
@@ -135,23 +136,23 @@ const NavBar = ({ userRole ,onSignOut}) => {
                     </div>
 
                     {[
-                      "Reports",
-                      "Appointments",
-                      "Assignments",
-                      "Closing of appointments",
-                      "Transfer In",
-                      "Duplicate Certificates",
-                      "Dealer (Backlog)",
-                      "CST (Backlog)",
-                      "Entry, Modify",
+                      { label: "Reports", path: "#" },
+                      { label: "Appointments", path: "#" },
+                      { label: "Assignments", path: "/assignments" },
+                      { label: "Transfer In", path: "#" },
+                      { label: "Closing of appointments", path: "#" },
+                      { label: "Duplicate Certificates", path: "#" },
+                      { label: "Dealer (Backlog)", path: "#" },
+                      { label: "CST (Backlog)", path: "#" },
+                      { label: "Entry, Modify", path: "#" },
                     ].map((item) => (
-                      <a
-                        key={item}
-                        href="#"
+                      <Link
+                        key={item.label}
+                        to={item.path}
                         className="block px-4 py-2 hover:bg-gray-100 whitespace-nowrap rounded-md"
                       >
-                        {item}
-                      </a>
+                        {item.label}
+                      </Link>
                     ))}
                   </div>
                 )}

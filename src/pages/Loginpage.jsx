@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import { useNavigate } from 'react-router-dom'; // Import useNavigate for redirection
+import Cookies from 'js-cookie';
 
 // Changed prop name from 'setRole' to 'onLogin' to match App.jsx
 const LoginPage = ({ onLogin }) => {
@@ -21,7 +22,6 @@ const LoginPage = ({ onLogin }) => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     setError(null);
-
     try {
       const response = await fetch(
         "https://vat-portal-backend-nic.onrender.com/login",
@@ -33,12 +33,16 @@ const LoginPage = ({ onLogin }) => {
           body: JSON.stringify(credentials),
         }
       );
-
+      console.log(response);
+      
       const data = await response.json();
       console.log("✅ Server response JSON:", data);
+      
+      Cookies.set('authToken', data.token, { expires: 7, secure: true, sameSite: 'Lax' });
+      console.log("Token stored in cookie:", data.token);
 
       if (response.ok && data?.role) { // Check for response.ok as well
-        onLogin(data.role); // Call the onLogin prop with the role
+        onLogin(data); // Call the onLogin prop with the role
         navigate('/'); // Redirect to the home page after successful login
       } else {
         setError(data.message || "Invalid credentials or no role returned.");
