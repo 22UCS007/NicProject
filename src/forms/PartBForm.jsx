@@ -101,14 +101,9 @@ const PartBForm = ({ onNext, onPrevious }) => {
   return (
     <div className="min-h-screen bg-[#D5E1F0] p-4 font-sans flex items-center justify-center">
       <div className="bg-white p-6 rounded-lg shadow-lg w-full max-w-4xl">
-        {/* Topbar */}
-        <div className="bg-[#5CA5FE] text-white p-3 rounded-t-lg mb-4 flex justify-between items-center">
-          <span className="font-semibold">::e-Registration-Inspector Note</span>
-          <a href="#" className="text-white underline text-xs">Sign Out</a>
-        </div>
         <div className="flex">
-          {/* Sidebar */}
-    
+          {/* Sidebar (if any) */}
+
           {/* Main Form */}
           <main className="flex-1">
             <h2 className="text-2xl font-bold text-center text-red-600 mb-6">Part B</h2>

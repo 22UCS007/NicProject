@@ -52,15 +52,9 @@ const PartAForm = ({ onNext }) => {
       <div className="bg-white p-6 cornered-lg shadow-lg w-full max-w-4xl">
         {/* Page Title */}
         <h2 className="text-2xl font-bold text-center text-red-600 mb-6">Part A</h2>
-        
-        {/* Header Strip - Primary Blue (rgb(69, 145, 225)) */}
-        <div className="bg-[#5CA5F3] text-white p-3 cornered-t-lg mb-4 text-center">
-          <h3 className="text-lg font-semibold">.:e-Registration-Inspector Note :.</h3>
-        </div>
 
         <div className="grid grid-cols-1 md:grid-cols-4 gap-4 mb-6 text-sm">
           {/* Left Navigation Panel - Primary Blue (rgb(90, 155, 224)) */}
-          
 
           {/* Main Form Content */}
           <form onSubmit={handleSubmit} className="col-span-1 md:col-span-3 space-y-4">
