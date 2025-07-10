@@ -7,6 +7,10 @@ import { useState } from "react";
 import Assignment from "./pages/InspectorAssign/Assignment";
 import Review from "./pages/Review";
 
+//for testing
+import PartAForm from "./forms/PartA";
+import PartBForm from "./forms/PartB";
+
 function App() {
   const [userRole, setUserRole] = useState("");
   const [userData, setUserData] = useState(null);
@@ -55,6 +59,7 @@ function App() {
             path="/reviewpage"
             element={userRole ? <Review userRole={userRole} userData={userData}/> : <Navigate to="/" />}
           />
+          
 
           {!userRole && <Route path="*" element={<Navigate to="/login" replace />} />}
         </Routes>
@@ -66,3 +71,4 @@ function App() {
 }
 
 export default App;
+
