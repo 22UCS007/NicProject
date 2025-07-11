@@ -60,21 +60,21 @@ const LoginPage = ({ onLogin }) => {
       <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-blue-100 to-purple-200">
         <form
           onSubmit={handleSubmit}
-          className="bg-slate-300 p-0 rounded shadow-md w-full max-w-md space-y-4" 
+          className="bg-slate-300 p-0 rounded shadow-md w-full max-w-md space-y-4"
         >
           {/* New div for the header section */}
-          <div className="bg-blue-600 text-white py-4 px-8 rounded-t"> {/* Applied background, padding, and rounded corners */}
+          <div className="bg-blue-600 text-white py-4 px-8 rounded-t">
             <h2 className="text-2xl font-bold text-center">Officer Login</h2>
           </div>
 
-          <div className="p-8 space-y-4"> {/* Added padding back to a new div for the form content */}
+          <div className="p-8 space-y-4">
             <input
               type="text"
               name="username"
               placeholder="Username"
               value={credentials.username}
               onChange={handleChange}
-              className="w-full px-4 py-2 border rounded focus:outline-none focus:ring-2 focus:ring-blue-400"
+              className="w-full px-4 py-2 border rounded focus:outline-none focus:ring-2 focus:ring-blue-400 text-black" // Added text-black here
             />
             <input
               type="password"
@@ -82,7 +82,7 @@ const LoginPage = ({ onLogin }) => {
               placeholder="Password"
               value={credentials.password}
               onChange={handleChange}
-              className="w-full px-4 py-2 border rounded focus:outline-none focus:ring-2 focus:ring-blue-400"
+              className="w-full px-4 py-2 border rounded focus:outline-none focus:ring-2 focus:ring-blue-400 text-black" // Added text-black here
             />
 
             <button
