@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import Cookies from 'js-cookie';
+import Cookies from 'js-cookie'; //  for  authentication purpose
 
 const AssignmentForm = ({ data, onBack, isDisabled = false }) => {
   const [inspector, setInspector] = useState('');
