@@ -16,6 +16,7 @@ const Assignment = () => {
     setViewOnlyForm(false); // show both form + table again
   };
 
+  // this show aktbale.jsx and assigmntform.jsx together
   return (
     <div className="min-h-screen bg-gray-100 px-4 py-6 space-y-6">
       {/* ✅ Top: Form */}
