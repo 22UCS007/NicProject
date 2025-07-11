@@ -3,7 +3,7 @@ import Cookies from 'js-cookie';
 import PropTypes from 'prop-types';
 
 const AckTable = ({ onSelect }) => {
-  const ackNo = 3;
+  const ackNo = 10001234;
 
   const [ackData, setAckData] = useState(null);
   const [loading, setLoading] = useState(true);

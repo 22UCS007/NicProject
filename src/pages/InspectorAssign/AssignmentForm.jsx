@@ -35,7 +35,6 @@ const AssignmentForm = ({ data, onBack, isDisabled = false }) => {
         setInspectorList(inspectorData);
         setError(null);
       } catch (err) {
-        console.error('Error fetching inspectors:', err);
         setError(err.message);
       }
     };
@@ -74,19 +73,19 @@ const AssignmentForm = ({ data, onBack, isDisabled = false }) => {
             Authorization: `Bearer ${token}`,
             'Content-Type': 'application/json',
           },
-          body: JSON.stringify({ assignedTo: inspector }),
+          body: JSON.stringify({ inspectorName: inspector }),
         }
       );
 
       if (!response.ok) {
-        const errorData = await response.json();
-        throw new Error(errorData.message || 'Assignment failed');
+        const errorText = await response.text();
+        throw new Error(errorText || 'Assignment failed');
       }
 
+      const responseData = await response.json();
       setAssigned(true);
-      setSuccessMsg(`${ackNo} assigned to ${inspector}`);
+      setSuccessMsg(`${responseData.ackNo} assigned to ${responseData.assignedTo}`);
     } catch (err) {
-      console.error('Error during assignment:', err);
       setError(err.message);
     }
   };
@@ -97,43 +96,62 @@ const AssignmentForm = ({ data, onBack, isDisabled = false }) => {
 
   return (
     <div className="max-w-5xl mx-auto bg-white border p-4 rounded shadow">
-      {/* Header */}
       <div className="bg-blue-500 text-white px-4 py-2 text-lg font-bold text-center mb-2 rounded">
         :.Assignment.:
       </div>
 
-      {/* Assignment Status */}
       <div className="flex gap-6 justify-center mb-4 text-sm">
-        <label className="inline-flex items-center">
-          <input type="radio" name="status" checked readOnly className="mr-1" />
+        <label
+          className={`inline-flex items-center ${
+            !assigned ? 'text-blue-600 font-semibold' : 'text-gray-600'
+          }`}
+        >
+          <input type="radio" name="status" checked={!assigned} readOnly className="mr-1" />
           Unassigned
         </label>
-        <label className="inline-flex items-center">
-          <input type="radio" name="status" disabled className="mr-1" />
+        <label
+          className={`inline-flex items-center ${
+            assigned ? 'text-blue-600 font-semibold' : 'text-gray-600'
+          }`}
+        >
+          <input type="radio" name="status" checked={assigned} readOnly className="mr-1" />
           Assigned
         </label>
       </div>
 
-      {/* Registration Types */}
       <div className="mb-4">
-        <label className="block text-sm font-semibold mb-1">Registration Types:</label>
+        <label className="block text-sm font-semibold mb-1 text-blue-800">Registration Types:</label>
         <div className="flex flex-wrap gap-4 text-sm">
           {[
-            'VAT/CST Registration',
-            'Transporter Registration',
-            'Registration Amendment',
-            'De-Registration (VAT/CST)',
-            'Transfer',
-            'Suspension/Revoke',
+            'VAT registration',
+            'CST Registartion',
+            'VAT',
+            'BOTH',
+            'New',
+            'Renewal',
+            'Amendment',
           ].map((type, i) => (
-            <label key={i}>
-              <input type="radio" name="regtype" className="mr-1" disabled /> {type}
+            <label
+              key={i}
+              className={`px-2 py-1 rounded ${
+                data?.registrationType === type
+                  ? 'text-blue-700 font-semibold'
+                  : 'text-gray-600'
+              }`}
+            >
+              <input
+                type="radio"
+                name="regtype"
+                className="mr-1"
+                checked={data?.registrationType === type}
+                readOnly
+              />
+              {type}
             </label>
           ))}
         </div>
       </div>
 
-      {/* Basic Fields */}
       <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mb-4">
         <div>
           <label className="block text-sm font-semibold">Ack. No.:</label>
@@ -181,7 +199,6 @@ const AssignmentForm = ({ data, onBack, isDisabled = false }) => {
         </div>
       </div>
 
-      {/* Fee Table */}
       <h3 className="text-md font-semibold mb-2 mt-4">Details of Fees</h3>
       <div className="overflow-x-auto">
         <table className="w-full border border-gray-300 text-sm text-center">
@@ -206,7 +223,6 @@ const AssignmentForm = ({ data, onBack, isDisabled = false }) => {
         </table>
       </div>
 
-      {/* Action Buttons */}
       <div className="mt-4 flex gap-4 justify-center">
         {!isDisabled && (
           <>
@@ -226,7 +242,6 @@ const AssignmentForm = ({ data, onBack, isDisabled = false }) => {
         )}
       </div>
 
-      {/* Assignment Message */}
       {assigned && successMsg && (
         <p className="mt-4 text-center text-green-600 font-semibold text-sm">
           ✅ {successMsg}
