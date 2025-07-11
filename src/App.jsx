@@ -11,7 +11,7 @@ import MainForm from "./forms/MainForm";
 // import PartA from "./forms/PartA";
 import PartAForm from "./forms/PartA";
 import PartBForm from "./forms/PartB";
-import PartC from "./forms/Partc";
+import PartC from "./forms/PartC";
 import Cst from "./forms/Cst";
 import AdditionalBusinessPlaces from "./forms/AdditionalBusinessPlaces";
 import BankInfo from "./forms/BankInfo";
