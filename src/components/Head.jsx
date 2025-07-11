@@ -5,11 +5,11 @@ const Head = ({ userRole }) => {
         <div className='mb-12'>
             {
                 userRole === "checker" ? (
-                    <div className="text-center text-2xl font-semibold mt-20 bg-blue-400 text-white">
+                    <div className="text-center text-2xl font-semibold  bg-blue-400 text-white ">
                         :.e-Registration-Inspector Note.:
                     </div>
                 ) : (
-                    <div className="text-center text-2xl font-semibold mt-20 bg-blue-400 text-white">
+                    <div className="text-center text-2xl font-semibold  bg-blue-400 text-white">
                         :.e-Registration-Approval.:
                     </div>
                 )

@@ -13,7 +13,6 @@ const LeftMenu = () => {
     { id: "cst", label: "CST" },
     { id: "partC", label: "Part (C)" },
     { id: "bankinfo", label: "Bank Info" },
-    { id: "additional", label: "Additional" },
     { id: "businessplaces", label: "Business Places" },
     { id: "businesspartner", label: "Business Partner details" },
     { id: "documents", label: "Documents" },
@@ -27,7 +26,7 @@ const LeftMenu = () => {
   }
 
   return (
-    <div>
+    <div className="bg-blue-500">
       <div className="text-[14px] bg-white border flex items-center px-2 py-1">
         <span className="text-red-600 font-bold">Ack.No.: </span>
         <span className="text-green-700 font-bold ml-1">12633089</span>

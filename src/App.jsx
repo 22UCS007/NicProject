@@ -6,12 +6,21 @@ import Footer from "./components/Footer";
 import { useState } from "react";
 import Assignment from "./pages/InspectorAssign/Assignment";
 import Review from "./pages/Review";
-import PartA from "./forms/PartA";
-import MainForm from "./forms/MainForm";
 
-//for testing
+import MainForm from "./forms/MainForm";
+// import PartA from "./forms/PartA";
 import PartAForm from "./forms/PartA";
 import PartBForm from "./forms/PartB";
+import PartC from "./forms/Partc";
+import Cst from "./forms/Cst";
+import AdditionalBusinessPlaces from "./forms/AdditionalBusinessPlaces";
+import BankInfo from "./forms/BankInfo";
+import BusinessPartnerForm from "./forms/BusinessPartnerDetails";
+import Documents from "./forms/Documents";
+import Finish from "./forms/Finish";
+
+
+
 
 function App() {
   const [userRole, setUserRole] = useState("");
@@ -32,46 +41,44 @@ function App() {
 
   return (
     <Router>
-      <div className="flex flex-col min-h-screen">
+      <div className="flex flex-col justify-between min-h-screen">
         {userRole && <NavBar userRole={userRole} onSignOut={handleSignOut} />}
 
         <Routes>
           <Route path="/login" element={<LoginPage onLogin={handleLogin} />} />
-
           <Route
             path="/"
             element={userRole ? <Navigate to="/home" /> : <Navigate to="/login" />}
           />
-
           <Route
             path="/home"
-            element={userRole ? <div className="p-4 text-center text-xl font-semibold">Welcome to the Home Page!</div> : <Navigate to="/login" />}
+            element={userRole ? <div className="p-4 text-center text-xl font-semibold"></div> : <Navigate to="/login" />}
           />
-
           <Route
             path="/manual-payment"
             element={userRole === "approver" ? <ManualPayment /> : <Navigate to="/" />}
           />
-
           <Route
             path="/assignments"
             element={userRole === "approver" ? <Assignment /> : <Navigate to="/" />}
           />
-
           <Route
             path="/reviewpage"
             element={userRole ? <Review userRole={userRole} userData={userData}/> : <Navigate to="/" />}
           />
-          
-
           <Route path="/form" element={userRole ? <MainForm userRole={userRole}/> : <Navigate to="/" />}>
-            <Route path="partA/:tinNumber" element={<PartA userRole={userRole} userData={userData}/>}/>
-            {/* similarly add other form parts here */}
+            <Route path="partA/:tinNumber" element={<PartAForm userRole={userRole} userData={userData}/>}/>
+            <Route path="partB/:tinNumber" element={<PartBForm userRole={userRole} userData={userData}/>}/>
+            <Route path="partC/:tinNumber" element={<PartC userRole={userRole} userData={userData}/>}/>
+            <Route path="cst/:tinNumber" element={<Cst userRole={userRole} userData={userData}/>}/>
+            <Route path="bankinfo/:tinNumber" element={<BankInfo userRole={userRole} userData={userData}/>}/>
+            <Route path="businessplaces/:tinNumber" element={<AdditionalBusinessPlaces userRole={userRole} userData={userData}/>}/>
+            <Route path="businesspartner/:tinNumber" element={<BusinessPartnerForm userRole={userRole} userData={userData}/>}/>
+            <Route path="documents/:tinNumber" element={<Documents userRole={userRole} userData={userData}/>}/>
+            <Route path="finish/:tinNumber" element={<Finish userRole={userRole} userData={userData}/>}/>
           </Route>
-
           {!userRole && <Route path="*" element={<Navigate to="/login" replace />} />}
         </Routes>
-      
 
         {userRole && <Footer userData={userData} />}
       </div>

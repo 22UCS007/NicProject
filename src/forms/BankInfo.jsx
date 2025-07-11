@@ -246,4 +246,4 @@ const BankInfo = () => {
   );
 };
 
-export { BankInfo };
+export default BankInfo;

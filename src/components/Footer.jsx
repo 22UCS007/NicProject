@@ -7,7 +7,7 @@ const Footer = ({userData}) => {
   const date = new Date();
   
   return (
-    <footer className="bg-blue-600 text-white p-4 rounded-lg shadow-lg mx-auto w-full max-w-full  mb-4">
+    <footer className="bg-blue-600 text-white p-4 shadow-lg mx-auto w-full max-w-full ">
       <div className="flex flex-col md:flex-row justify-between items-center text-center space-y-2 md:space-y-0 md:space-x-4">
         <div className="flex-1 text-sm md:text-base text-center">
           <p>{name} / VAT Officer /</p>

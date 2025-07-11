@@ -57,7 +57,7 @@ const Review = ({userRole, userData}) => {
     }
 
     return (
-        <div>
+        <div className='min-h-screen'>
             <Head userRole={userRole}/>
                 
             {loading && 
