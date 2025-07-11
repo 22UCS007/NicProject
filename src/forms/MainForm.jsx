@@ -7,9 +7,9 @@ const MainForm = ({userRole}) => {
     return (
         <div>
             <Head userRole={userRole}/>
-            <div className='flex w-full'>
+            <div className='flex  w-full  -mt-12'>
                 <LeftMenu/>
-                <Outlet/>
+                <div className='min-w-full '><Outlet/></div>
             </div>
         </div>
     )

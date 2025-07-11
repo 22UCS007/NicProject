@@ -346,4 +346,4 @@ const FormRow = ({ rowNumber, label, content }) => {
   );
 };
 
-export { PartC };
+export default PartC;

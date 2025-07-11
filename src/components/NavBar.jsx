@@ -17,7 +17,7 @@ const NavBar = ({ userRole, onSignOut }) => {
   return (
     <nav className="bg-white shadow-md rounded-lg">
       {/* Header Section */}
-      <div className="bg-blue-500 text-white p-3 flex flex-col sm:flex-row justify-between items-center rounded-t-lg">
+      <div className="bg-blue-500 text-white p-3 flex flex-col sm:flex-row justify-between items-center ">
         <h1 className="text-lg sm:text-xl font-bold mb-2 sm:mb-0 text-yellow-300">
           VATSoft - VAT e-Filing System
         </h1>
