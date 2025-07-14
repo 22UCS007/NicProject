@@ -55,7 +55,7 @@ const PartBForm = ({ onNext, onPrevious }) => {
   const navigate = useNavigate();
 
   // The specific TIN number for this form, ideally passed from PartA or URL
-  const tinNo = formData.tin_no;
+  const tinNo = 'TIN123457';
 
   // Function to fetch Part B Data
   const fetchPartBData = async (currentTin) => {
