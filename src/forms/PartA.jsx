@@ -43,7 +43,7 @@ const PartAForm = () => {
   const navigate = useNavigate();
 
   // The specific TIN number for this form
-  const tinNo = '250710-00002'; // This will be passed to Part B
+  const tinNo = 'TIN123457'; // This will be passed to Part B
 
   // Function to fetch Part A Data
   const fetchFormData = async (currentTin) => {
