@@ -1,8 +1,12 @@
 
 
 import React, { useState } from "react";
+import { useParams, useNavigate } from "react-router-dom";
 
 const Cst = () => {
+  const {tinNumber} = useParams();
+  const navigate  = useNavigate();
+
   const [applyCst, setApplyCst] = useState(null);
   const [purchaseDate, setPurchaseDate] = useState("");
   const [subcategory, setSubcategory] = useState("");
@@ -29,11 +33,14 @@ const Cst = () => {
   };
 
   const handlePrevious = () => {
-    alert("Going to Previous Step...");
+    navigate(`/form/partB/${tinNumber}`); // Optional: pass tinNo back if PartA needs it on return
   };
 
   const handleNext = () => {
-    alert("Proceeding to Next Step...");
+    // Before navigating, you might want to save Part B data to your backend
+    // Or just proceed to Part C.
+    console.log('Proceeding to PartC with TIN:');
+    navigate(`/form/partC/${tinNumber}`); // Pass tinNo to Part C
   };
 
   return (

@@ -1,6 +1,6 @@
 
 import React, { useState, useEffect } from "react";
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, useParams } from 'react-router-dom';
 import Cookies from 'js-cookie';
 
 // Define your API base URL for Part B
@@ -17,6 +17,8 @@ const initialAddressState = {
 };
 
 const PartBForm = ({ onNext, onPrevious }) => {
+  const {tinNumber} = useParams();
+
   const [formData, setFormData] = useState({
     ack_no: '',
     tin_no: '250710-00001', // This should ideally come from props or context, using hardcoded for now
@@ -280,14 +282,14 @@ const PartBForm = ({ onNext, onPrevious }) => {
 
    // Handlers for navigation
   const handlePrevious = () => {
-    navigate('/partA', { state: { tinNo: tinNo } }); // Optional: pass tinNo back if PartA needs it on return
+    navigate(`/form/partA/${tinNumber}`, { state: { tinNo: tinNo } }); // Optional: pass tinNo back if PartA needs it on return
   };
 
   const handleNext = () => {
     // Before navigating, you might want to save Part B data to your backend
-    // Or just proceed to Part C.
-    console.log('Proceeding to Part C with TIN:', tinNo);
-    navigate('/partC', { state: { tinNo: tinNo } }); // Pass tinNo to Part C
+    // Or just proceed to CST.
+    console.log('Proceeding to CST with TIN:', tinNo);
+    navigate(`/form/cst/${tinNumber}`, { state: { tinNo: tinNo } }); // Pass tinNo to Part C
   };
 
   if (loading) {

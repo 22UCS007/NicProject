@@ -1,10 +1,14 @@
 import React, { useState, useEffect } from 'react';
 import Cookies from 'js-cookie';
+import { useParams, useNavigate } from "react-router-dom";
 
 const API_BASE_URL_REGISTRATION = 'https://vat-portal-backend-nic.onrender.com/api/businessContact';
 const API_BASE_URL_PARTNERS = 'https://vat-portal-backend-nic.onrender.com/api/businessPartners';
 
 const BusinessPartnerForm = () => {
+    const {tinNumber} = useParams();
+    const navigate  = useNavigate();
+
     const [tin, setTin] = useState('TIN123456');
     const [mainContact, setMainContact] = useState({
         applicantName: '',
@@ -154,6 +158,17 @@ const BusinessPartnerForm = () => {
     if (errorPartners) {
         return <div className="text-center p-6 text-red-600">Error loading partners list: {errorPartners.message}</div>;
     }
+
+    const handlePrevious = () => {
+        navigate(`/form/businessplaces/${tinNumber}`); // Optional: pass tinNo back if PartA needs it on return
+    };
+
+    const handleNext = () => {
+        // Before navigating, you might want to save Part B data to your backend
+        // Or just proceed to Part C.
+        console.log('Proceeding to Documents with TIN:', tinNumber);
+        navigate(`/form/documents/${tinNumber}`); // Pass tinNo to Part C
+    };
 
     return (
         <div className="min-h-screen bg-slate-200 p-6 flex items-center justify-center">
@@ -476,10 +491,10 @@ const BusinessPartnerForm = () => {
                     </div>
                 </div>
                 <div className="flex justify-center space-x-4 mt-6">
-                    <button className="bg-blue-600 text-white px-6 font-bold py-2 rounded-md hover:bg-blue-800 transition duration-200">
+                    <button className="bg-blue-600 text-white px-6 font-bold py-2 rounded-md hover:bg-blue-800 transition duration-200" onClick={handlePrevious}>
                         Previous
                     </button>
-                    <button className="bg-blue-600 text-white px-6 font-bold py-2 rounded-md hover:bg-blue-800 transition duration-200">
+                    <button className="bg-blue-600 text-white px-6 font-bold py-2 rounded-md hover:bg-blue-800 transition duration-200" onClick={handleNext}>
                         Next
                     </button>
                 </div>

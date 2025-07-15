@@ -1,8 +1,11 @@
 import React from "react";
 import { useState } from "react";
+import { useParams, useNavigate } from "react-router-dom";
 
 const PartC = () => {
-  
+  const { tinNumber } = useParams();
+  const navigate  = useNavigate();
+
   const [formData, setFormData] = useState({
     regdNo: "",
     tradeLicense: "",
@@ -23,6 +26,18 @@ const PartC = () => {
     finalDesignation: "SOFTWARE DEVELOPER",
   });
 
+  // Handlers for navigation
+  const handlePrevious = () => {
+    navigate(`/form/cst/${tinNumber}`); // Optional: pass tinNo back if PartA needs it on return
+  };
+
+  const handleNext = () => {
+    // Before navigating, you might want to save Part B data to your backend
+    // Or just proceed to Part C.
+    console.log('Proceeding to Bank Info with TIN:', tinNumber);
+    navigate(`/form/bankinfo/${tinNumber}`); // Pass tinNo to Part C
+  };
+
   const handleChange = (e) => {
     // const { name, value, type, checked } = e.target;
     // setFormData((prevData) => ({
@@ -30,6 +45,7 @@ const PartC = () => {
     //   [name]: type === "radio" ? (checked ? value : prevData[name]) : value,
     // }));
   };
+
   return (
     <div className="min-h-screen flex justify-center items-start py-8 px-4 font-inter">
       <div className="bg-white rounded-xl shadow-lg max-w-4xl w-full overflow-hidden">
@@ -317,10 +333,10 @@ const PartC = () => {
         </div>
 
         <div className="p-5 bg-gray-100 flex justify-center space-x-4 border-t border-gray-200">
-          <button className="bg-blue-600 hover:bg-blue-700 text-white font-semibold py-2 px-6 rounded-md shadow-md transition duration-200 ease-in-out">
+          <button className="bg-blue-600 hover:bg-blue-700 text-white font-semibold py-2 px-6 rounded-md shadow-md transition duration-200 ease-in-out" onClick={handlePrevious}>
             Previous
           </button>
-          <button className="bg-blue-600 hover:bg-blue-700 text-white font-semibold py-2 px-6 rounded-md shadow-md transition duration-200 ease-in-out">
+          <button className="bg-blue-600 hover:bg-blue-700 text-white font-semibold py-2 px-6 rounded-md shadow-md transition duration-200 ease-in-out" onClick={handleNext}>
             Next
           </button>
         </div>

@@ -1,9 +1,13 @@
 import { Upload } from "lucide-react"
 import React from "react"
 import { useState } from "react"
+import { useParams, useNavigate } from "react-router-dom";
 
 
 const FormChecker = () => {
+    const {tinNumber} = useParams();
+    const navigate  = useNavigate();
+
     const [inspectorComment, setInspectorComment] = useState("")
 
     const [formData, setFormData] = useState({
@@ -40,6 +44,10 @@ const FormChecker = () => {
                 [name]: value
             }));
         }
+    };
+
+    const handlePrevious = () => {
+        navigate(`/form/documents/${tinNumber}`);
     };
 
     return (
@@ -396,7 +404,7 @@ const FormChecker = () => {
             </div>
 
             <div className="flex justify-center mt-4 gap-4">
-                <button className="bg-sky-400 font-semibold text-black px-2 mr-2">Previous</button>
+                <button className="bg-sky-400 font-semibold text-black px-2 mr-2" onClick={handlePrevious}>Previous</button>
             </div>
 
         </div>

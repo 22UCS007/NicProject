@@ -4,9 +4,13 @@ import { useState } from "react"
 import EDRSection from "./EDRSection"
 import VATSection from "./VATSection"
 import YesNoQuestions from "./YesNoQuestions"
+import { useParams, useNavigate } from "react-router-dom";
 
 
 const FormApprover = () => {
+    const {tinNumber} = useParams();
+    const navigate  = useNavigate();
+
     const [approvingComment, setApprovingComment] = useState("")
 
     const [formData, setFormData] = useState({
@@ -49,6 +53,10 @@ const FormApprover = () => {
           [name]: newValue,
         }));
       };
+
+    const handlePrevious = () => {
+        navigate(`/form/documents/${tinNumber}`);
+    };
 
 
     return (
@@ -426,7 +434,7 @@ const FormApprover = () => {
             </div>
 
             <div className="flex justify-center mt-4 gap-4">
-                <button className="bg-sky-400 font-semibold text-black px-2 mr-2">Previous</button>
+                <button className="bg-sky-400 font-semibold text-black px-2 mr-2" onClick={handlePrevious}>Previous</button>
             </div>
 
         </div>

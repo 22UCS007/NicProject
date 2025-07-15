@@ -1,7 +1,11 @@
 import React, { useState } from "react";
 import { Plus, Edit, Trash } from "lucide-react";
+import { useParams, useNavigate } from "react-router-dom";
 
 const BankInfo = () => {
+  const {tinNumber} = useParams();
+  const navigate  = useNavigate();
+
   const [bankName, setBankName] = useState(
     "Agartala Cooperative Urban Bank Ltd."
   );
@@ -49,6 +53,19 @@ const BankInfo = () => {
   const handleDelete = () => {
     console.log("Delete button clicked");
   };
+
+  // Handlers for navigation
+  const handlePrevious = () => {
+    navigate(`/form/partC/${tinNumber}`); // Optional: pass tinNo back if PartA needs it on return
+  };
+
+  const handleNext = () => {
+    // Before navigating, you might want to save Part B data to your backend
+    // Or just proceed to Part C.
+    console.log('Proceeding to Bank Info with TIN:', tinNumber);
+    navigate(`/form/businessplaces/${tinNumber}`); // Pass tinNo to Part C
+  };
+
   return (
     <div className="min-h-screen bg-gray-100 p-4 sm:p-6 md:p-8 flex flex-col items-center font-inter">
       <div className="w-full max-w-4xl bg-white rounded-lg shadow-xl p-6 sm:p-8">
@@ -234,10 +251,10 @@ const BankInfo = () => {
         </div>
 
         <div className="flex justify-center gap-4 mt-8">
-          <button className="px-6 py-3 bg-blue-700 text-white font-bold rounded-lg shadow-lg hover:bg-blue-800 focus:outline-none focus:ring-2 focus:ring-blue-600 focus:ring-offset-2 transition ease-in-out duration-150 text-base">
+          <button className="px-6 py-3 bg-blue-700 text-white font-bold rounded-lg shadow-lg hover:bg-blue-800 focus:outline-none focus:ring-2 focus:ring-blue-600 focus:ring-offset-2 transition ease-in-out duration-150 text-base" onClick={handlePrevious}>
             Previous
           </button>
-          <button className="px-6 py-3 bg-blue-700 text-white font-bold rounded-lg shadow-lg hover:bg-blue-800 focus:outline-none focus:ring-2 focus:ring-blue-600 focus:ring-offset-2 transition ease-in-out duration-150 text-base">
+          <button className="px-6 py-3 bg-blue-700 text-white font-bold rounded-lg shadow-lg hover:bg-blue-800 focus:outline-none focus:ring-2 focus:ring-blue-600 focus:ring-offset-2 transition ease-in-out duration-150 text-base" onClick={handleNext}>
             Next
           </button>
         </div>

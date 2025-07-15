@@ -1,6 +1,10 @@
 import React, { useState, useEffect } from 'react';
+import { useParams, useNavigate } from "react-router-dom";
 
 const Documents = () => {
+    const {tinNumber} = useParams();
+    const navigate  = useNavigate();
+
     // State for the documents data
     const [documents, setDocuments] = useState([]);
     const [loadingDocuments, setLoadingDocuments] = useState(true);
@@ -63,6 +67,18 @@ const Documents = () => {
         console.log(`View document with ID: ${documentId}`);
         alert(`Viewing document with ID: ${documentId}`);
     };
+
+    const handlePrevious = () => {
+        navigate(`/form/businesspartner/${tinNumber}`); // Optional: pass tinNo back if PartA needs it on return
+    };
+
+    const handleNext = () => {
+        // Before navigating, you might want to save Part B data to your backend
+        // Or just proceed to Part C.
+        console.log('Proceeding to finish with TIN:', tinNumber);
+        navigate(`/form/finish/${tinNumber}`); // Pass tinNo to Part C
+    };
+
     return (
         <div className="min-h-screen bg-slate-200 p-6 flex items-center justify-center">
             <div className="w-full max-w-6xl bg-slate-200 shadow-lg rounded-lg p-2">
@@ -180,10 +196,10 @@ const Documents = () => {
                 </div>
                 {/* Navigation Buttons */}
                 <div className="flex justify-center space-x-4 mt-6">
-                    <button className="bg-blue-600 text-white px-6 font-bold hover:bg-blue-800">
+                    <button className="bg-blue-600 text-white px-6 font-bold hover:bg-blue-800" onClick={handlePrevious}>
                         Previous
                     </button>
-                    <button className="bg-blue-600 text-white px-6 font-bold hover:bg-blue-800">
+                    <button className="bg-blue-600 text-white px-6 font-bold hover:bg-blue-800" onClick={handleNext}>
                         Next
                     </button>
                 </div>

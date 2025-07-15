@@ -1,13 +1,15 @@
 
 
 import React, { useState, useEffect } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, useParams } from 'react-router-dom';
 import Cookies from 'js-cookie';
 
 // Define your API base URL for Part A
 const API_BASE_URL_PART_A = 'https://vat-portal-backend-nic.onrender.com/api/forms/partA/tin';
 
 const PartAForm = () => {
+  const {tinNumber} = useParams();
+
   // State to manage form data, NOW ALIGNED WITH DATABASE COLUMN NAMES
   const [formData, setFormData] = useState({
     ack_no: '',         // Corresponds to 'ack_no' in DB
@@ -156,7 +158,7 @@ const PartAForm = () => {
     e.preventDefault();
     console.log('Final Part A Form Data to be submitted/passed:', formData);
     // Pass tinNo as state to the /partB route
-    navigate('/partB', { state: { tinNo: formData.tin_no } });
+    navigate(`/form/partB/${tinNumber}`, { state: { tinNo: formData.tin_no } });
   };
 
   // Consolidated loading and error checks
