@@ -1,6 +1,10 @@
 import React, { useState } from "react";
+import { useParams, useNavigate } from "react-router-dom";
 
 const AdditionalBusinessPlaces = () => {
+  const {tinNumber} = useParams();
+  const navigate  = useNavigate();
+
   const [formData, setFormData] = useState({
     regState: "",
     regCST: "",
@@ -113,27 +117,37 @@ const AdditionalBusinessPlaces = () => {
     setFormData({ ...selected });
   };
 
+  // const handlePrevious = () => {
+  //   if (pageIndex > 0) {
+  //     setPageIndex((prev) => {
+  //       const newIndex = prev - 1;
+  //       setTableData(dummyPages[newIndex]);
+  //       setSelectedId(null);
+  //       return newIndex;
+  //     });
+  //   }
+  // };
+
+  // const handleNext = () => {
+  //   if (pageIndex < dummyPages.length - 1) {
+  //     setPageIndex((prev) => {
+  //       const newIndex = prev + 1;
+  //       setTableData(dummyPages[newIndex]);
+  //       setSelectedId(null);
+  //       return newIndex;
+  //     });
+  //   }
+  // };
+
+  // Handlers for navigation
   const handlePrevious = () => {
-    if (pageIndex > 0) {
-      setPageIndex((prev) => {
-        const newIndex = prev - 1;
-        setTableData(dummyPages[newIndex]);
-        setSelectedId(null);
-        return newIndex;
-      });
-    }
+    navigate(`/form/bankinfo/${tinNumber}`);
   };
 
   const handleNext = () => {
-    if (pageIndex < dummyPages.length - 1) {
-      setPageIndex((prev) => {
-        const newIndex = prev + 1;
-        setTableData(dummyPages[newIndex]);
-        setSelectedId(null);
-        return newIndex;
-      });
-    }
+    navigate(`/form/businesspartner/${tinNumber}`);
   };
+
 
   const resetForm = () => {
     setFormData({
@@ -314,15 +328,15 @@ const AdditionalBusinessPlaces = () => {
       <div className="flex justify-end gap-4 mt-6">
         <button
           onClick={handlePrevious}
-          disabled={pageIndex === 0}
-          className="bg-blue-800 text-white font-bold px-6 py-2 rounded disabled:opacity-50"
+          // disabled={pageIndex === 0}
+          className="bg-blue-800 text-white font-bold px-6 py-2 rounded"
         >
           Previous
         </button>
         <button
           onClick={handleNext}
-          disabled={pageIndex === dummyPages.length - 1}
-          className="bg-blue-800 text-white font-bold px-6 py-2 rounded disabled:opacity-50"
+          // disabled={pageIndex === dummyPages.length - 1}
+          className="bg-blue-800 text-white font-bold px-6 py-2 rounded"
         >
           Next
         </button>
